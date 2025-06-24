@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог освітлення - Інтерактивний фліпбук</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #39247c;
+            --primary-light: #5a41b8;
+            --secondary-dark: #d63b18;
+            --secondary-light: #ff5c35;
+            --text-dark: #333;
+            --text-light: #f8f8f8;
+            --bg-gradient: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 50%, var(--secondary-dark) 100%);
+            --shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            --shadow-hover: 0 15px 50px rgba(0, 0, 0, 0.2);
+            --radius: 12px;
+            --book-width: 1200px;
+            --book-height: 750px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: var(--text-dark);
+        }
+
+        .flipbook-container {
+            position: relative;
+            width: var(--book-width);
+            height: var(--book-height);
+            max-width: 95vw;
+            max-height: 85vh;
+            perspective: 2500px;
+            filter: drop-shadow(var(--shadow));
+            background: #f4f4f4;
+            border-radius: var(--radius);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .flipbook {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            display: flex;
+            justify-content: center;
+        }
+
+        .page {
+            position: absolute;
+            width: calc(var(--book-width) / 2);
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 1s cubic-bezier(0.3, 0.7, 0.3, 1);
+        }
+
+        .page-left {
+            left: 0;
+            transform-origin: right center;
+            border-radius: var(--radius) 0 0 var(--radius);
+        }
+
+        .page-right {
+            left: calc(var(--book-width) / 2);
+            transform-origin: left center;
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+
+        .page-front, .page-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: white;
+            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.05);
+            backface-visibility: hidden;
+            overflow: hidden;
+            border-radius: inherit;
+        }
+
+        .page-back {
+            transform: rotateY(180deg);
+        }
+
+        .page.flipped {
+            transform: rotateY(-180deg);
+        }
+
+        .page-content {
+            padding: 30px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(45deg, rgba(57, 36, 124, 0.03), rgba(214, 59, 24, 0.03));
+            text-align: left;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-light);
+            position: relative;
+        }
+
+        .page-header::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 30%;
+            right: 30%;
+            height: 1px;
+            background: var(--secondary-light);
+        }
+
+        .page-title {
+            color: var(--primary-dark);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: 0.3px;
+        }
+
+        .page-subtitle {
+            color: var(--secondary-dark);
+            font-size: 1rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        .products-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            flex: 1;
+            overflow-y: auto; /* Додано прокрутку для вміщення контенту */
+            padding: 5px;
+        }
+
+        .product-item {
+            background: white;
+            border-radius: 8px;
+            padding: 15px; /* Зменшено відступи */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            flex: 1;
+        }
+
+        .product-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-image {
+            width: 100%;
+            height: auto;
+            max-height: 200px; /* Обмеження висоти для десктопів */
+            aspect-ratio: 4 / 3; /* Співвідношення сторін */
+            background: white; /* Білий фон */
+            border-radius: 8px;
+            margin-bottom: 15px; /* Зменшено відступ */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            max-height: 200px; /* Синхронізовано з контейнером */
+            object-fit: contain; /* Зображення відображається повністю */
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .product-item:hover .product-image,
+        .product-item:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, rgba(57, 36, 124, 0.1), rgba(214, 59, 24, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .product-item:hover .product-image::after {
+            opacity: 1;
+        }
+
+        .image-placeholder {
+            position: absolute;
+            bottom: 6px;
+            right: 6px;
+            background: rgba(57, 36, 124, 0.9);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .product-name {
+            color: var(--primary-dark);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .product-name::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--secondary-light);
+            transition: width 0.3s ease;
+        }
+
+        .product-item:hover .product-name::after {
+            width: 60px;
+        }
+
+        .product-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 10px; /* Зменшено відступ */
+            font-size: 0.9rem;
+            text-align: justify;
+        }
+
+        .product-specs {
+            background: rgba(57, 36, 124, 0.05);
+            padding: 10px; /* Зменшено відступ */
+            border-radius: 8px;
+            margin-bottom: 10px; /* Зменшено відступ */
+            border: 1px solid rgba(57, 36, 124, 0.1);
+        }
+
+        .specs-title {
+            color: var(--primary-dark);
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .specs-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 6px;
+            font-size: 0.85rem;
+        }
+
+        .spec-item {
+            color: #555;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .spec-item::before {
+            content: '•';
+            position: absolute;
+            left: 5px;
+            color: var(--secondary-light);
+            font-weight: bold;
+        }
+
+        .product-price {
+            color: var(--secondary-dark);
+            font-size: 1.4rem;
+            font-weight: 700;
+            text-align: center;
+            background: linear-gradient(to right, rgba(214, 59, 24, 0.08), rgba(90, 65, 184, 0.08), rgba(214, 59, 24, 0.08));
+            padding: 8px; /* Зменшено відступ */
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-price::after {
+            content: '✦';
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(214, 59, 24, 0.3);
+            font-size: 1rem;
+        }
+
+        .page-number {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            color: #aaa;
+            font-size: 0.75rem;
+            font-weight: 500;
+            background: rgba(0, 0, 0, 0.05);
+            padding: 3px 8px;
+            border-radius: 10px;
+        }
+
+        .cover-page .page-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(57, 36, 124, 0.08), rgba(214, 59, 24, 0.08));
+            position: relative;
+        }
+
+        .cover-decor {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(90, 65, 184, 0.15) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+        .cover-decor:nth-child(1) {
+            top: -120px;
+            right: -120px;
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(214, 59, 24, 0.1) 0%, transparent 60%);
+        }
+
+        .cover-decor:nth-child(2) {
+            bottom: -180px;
+            left: -180px;
+            width: 550px;
+            height: 550px;
+        }
+
+        .cover-content {
+            position: relative;
+            z-index: 1;
+            max-width: 90%;
+        }
+
+        .cover-logo {
+            width: 140px;
+            height: 140px;
+            background: linear-gradient(45deg, var(--primary-dark), var(--primary-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            color: white;
+            margin: 0 auto 25px;
+            box-shadow: 0 8px 25px rgba(57, 36, 124, 0.3);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .flipbook-container:hover .cover-logo {
+            transform: rotate(15deg) scale(1.05);
+            box-shadow: 0 12px 35px rgba(57, 36, 124, 0.4);
+        }
+
+        .cover-title {
+            color: var(--primary-dark);
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: inline-block;
+        }
+
+        .cover-title::after {
+            content: '';
+            position: absolute;
+            bottom: 3px;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(to right, transparent, var(--secondary-light), transparent);
+            opacity: 0.7;
+            z-index: -1;
+        }
+
+        .cover-subtitle {
+            color: var(--secondary-dark);
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 25px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .cover-description {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 1.1rem;
+            text-align: justify;
+        }
+
+        .navigation {
+            position: absolute;
+            bottom: -70px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .nav-button {
+            background: linear-gradient(45deg, var(--primary-dark), var(--primary-light));
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.4s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(57, 36, 124, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-button::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, var(--secondary-dark), var(--secondary-light));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .nav-button:hover::before {
+            opacity: 1;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 8px 20px rgba(214, 59, 24, 0.4);
+        }
+
+        .nav-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .nav-button:disabled::before {
+            display: none;
+        }
+
+        .nav-button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-counter {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 8px 18px;
+            border-radius: 25px;
+            color: var(--primary-dark);
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: var(--shadow);
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .page-indicator {
+            height: 6px;
+            width: 100%;
+            max-width: 250px;
+            margin: 25px auto 0;
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .page-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .page-dot.active {
+            background: var(--secondary-light);
+            transform: scale(1.3);
+            box-shadow: 0 0 10px rgba(255, 92, 53, 0.8);
+        }
+
+        @keyframes page-turn {
+            0% { 
+                transform: rotateY(0deg) translateZ(0);
+                box-shadow: inset 2px 0 5px rgba(0, 0, 0, 0.1);
+            }
+            30% { 
+                transform: rotateY(-60deg) translateZ(-20px) skewY(5deg);
+                box-shadow: inset 20px 0 50px rgba(0, 0, 0, 0.2), -10px 5px 30px rgba(0, 0, 0, 0.3);
+            }
+            100% { 
+                transform: rotateY(-180deg) translateZ(0);
+                box-shadow: inset 2px 0 5px rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        @keyframes page-turn-back {
+            0% { 
+                transform: rotateY(-180deg) translateZ(0);
+                box-shadow: inset 2px 0 5px rgba(0, 0, 0, 0.1);
+            }
+            30% { 
+                transform: rotateY(-240deg) translateZ(-20px) skewY(-5deg);
+                box-shadow: inset -20px 0 50px rgba(0, 0, 0, 0.2), 10px 5px 30px rgba(0, 0, 0, 0.3);
+            }
+            100% { 
+                transform: rotateY(-360deg) translateZ(0);
+                box-shadow: inset 2px 0 5px rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        .page.flipping-forward {
+            animation: page-turn 1s cubic-bezier(0.3, 0.7, 0.3, 1) forwards;
+        }
+
+        .page.flipping-back {
+            animation: page-turn-back 1s cubic-bezier(0.3, 0.7, 0.3, 1) forwards;
+        }
+
+        @keyframes bookOpen {
+            0% { transform: scale(0.9) rotateX(15deg) rotateY(-10deg); opacity: 0; }
+            100% { transform: scale(1) rotateX(0) rotateY(0); opacity: 1; }
+        }
+
+        .flipbook-container {
+            animation: bookOpen 1s ease-out forwards;
+        }
+
+        .book-spine {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.2), transparent);
+            z-index: 5;
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --book-width: 95vw;
+                --book-height: 70vh;
+            }
+
+            .flipbook-container {
+                max-width: 100vw;
+                max-height: 90vh;
+                padding: 10px;
+            }
+
+            .page-content {
+                padding: 15px;
+            }
+
+            .page-title {
+                font-size: 1.4rem;
+            }
+
+            .cover-title {
+                font-size: 2rem;
+            }
+
+            .cover-subtitle {
+                font-size: 1rem;
+            }
+
+            .cover-logo {
+                width: 100px;
+                height: 100px;
+                font-size: 2.5rem;
+            }
+
+            .product-image {
+                max-height: 150px; /* Обмеження висоти для мобільних */
+                aspect-ratio: 4 / 3;
+            }
+
+            .product-image img {
+                max-height: 150px;
+                width: auto;
+                object-fit: contain;
+            }
+
+            .product-item {
+                padding: 12px;
+            }
+
+            .product-name {
+                font-size: 1.2rem;
+            }
+
+            .product-price {
+                font-size: 1.2rem;
+            }
+
+            .nav-button {
+                width: 35px;
+                height: 35px;
+            }
+
+            .navigation {
+                bottom: -60px;
+                gap: 8px;
+            }
+
+            .page-counter {
+                font-size: 0.8rem;
+                padding: 6px 14px;
+                min-width: 70px;
+            }
+
+            .contacts-container {
+                padding: 12px;
+                width: 95%;
+            }
+
+            .contacts-title {
+                font-size: 1.4rem;
+            }
+
+            .contact-item {
+                margin-bottom: 10px;
+                padding-bottom: 10px;
+            }
+
+            .contact-icon {
+                width: 30px;
+                height: 30px;
+                font-size: 0.9rem;
+            }
+
+            .contact-text {
+                font-size: 0.85rem;
+            }
+        }
+
+        .contacts-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(57, 36, 124, 0.1);
+        }
+
+        .contacts-title {
+            color: var(--primary-dark);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            text-align: center;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .contacts-title::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 2px;
+            background: var(--secondary-light);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(57, 36, 124, 0.1);
+        }
+
+        .contact-icon {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(45deg, var(--primary-light), var(--secondary-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-label {
+            color: var(--secondary-dark);
+            font-weight: 600;
+            font-size: 0.8rem;
+            margin-bottom: 3px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .contact-text {
+            color: var(--text-dark);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .thank-you {
+            background: linear-gradient(45deg, var(--primary-dark), var(--secondary-dark));
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .thank-you h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .thank-you p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="flipbook-container">
+        <div class="flipbook" id="flipbook">
+            <div class="book-spine"></div>
+            <div class="page cover-page page-left" data-page="0">
+                <div class="page-front">
+                    <div class="cover-decor"></div>
+                    <div class="cover-decor"></div>
+                    <div class="page-content">
+                        <div class="cover-content">
+                            <div class="cover-logo">💡</div>
+                            <h1 class="cover-title">КАТАЛОГ ОСВІТЛЕННЯ</h1>
+                            <p class="cover-subtitle">Преміальні рішення для освітлення</p>
+                            <p class="cover-description">
+                                Ознайомтеся з нашим ексклюзивним каталогом сучасних та класичних світильників 
+                                для створення ідеальної атмосфери у вашому домі чи офісі.
+                            </p>
+                            <div class="page-indicator">
+                                <div class="page-dot active" data-page="0"></div>
+                                <div class="page-dot" data-page="2"></div>
+                                <div class="page-dot" data-page="4"></div>
+                            </div>
+                        </div>
+                        <div class="page-number">Обкладинка</div>
+                    </div>
+                </div>
+                <div class="page-back">
+                    <div class="page-content">
+                        <div class="cover-content">
+                            <div class="cover-logo">💡</div>
+                            <h1 class="cover-title">КАТАЛОГ ОСВІТЛЕННЯ</h1>
+                            <p class="cover-subtitle">Преміальні рішення</p>
+                            <p class="cover-description">
+                                Почніть подорож нашим каталогом.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Сторінка 1 (права сторона) -->
+            <div class="page page-right" data-page="1">
+                <div class="page-front">
+                    <div class="page-content">
+                        <div class="page-header">
+                            <h2 class="page-title">Люстри преміум-класу</h2>
+                            <p class="page-subtitle">Розкіш та елегантність</p>
+                        </div>
+                        <div class="products-container">
+                            <div class="product-item">
+                                <div class="product-image">
+                                    <img src="https://www.brille.ua/image/cachewebp/catalog/oc_35636da64e5f423506bb3df2c35b1846ab3d0-1280x0.webp" alt="Люстра преміум-класу Модель 1" loading="lazy">
+                                </div>
+                                <h3 class="product-name">Люстра світлодіодна BR-01 693C/2</h3>
+                                <p class="product-description">
+                                    Сучасна модель в мінімалістичному стилі для освітлення великих та малих кімнат. 
+                                </p>
+                                <div class="product-specs">
+                                    <div class="specs-title">Характеристики:</div>
+                                    <div class="specs-list">
+                                        <div class="spec-item">Матеріал: Метал, Пластик</div>
+                                        <div class="spec-item">Розмір: 80x25 см</div>
+                                        <div class="spec-item">Стиль: Сучасний</div>
+                                    </div>
+                                </div>
+                                <div class="product-price">7199 грн</div>
+                            </div>
+                        </div>
+                        <div class="page-number">1</div>
+                    </div>
+                </div>
+                <div class="page-back">
+                    <div class="page-content">
+                        <div class="cover-content">
+                            <div class="cover-logo">💡</div>
+                            <h1 class="cover-title">КАТАЛОГ ОСВІТЛЕННЯ</h1>
+                            <p class="cover-subtitle">Преміальні рішення</p>
+                            <p class="cover-description">
+                                Почніть подорож нашим каталогом.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Сторінка 2 (ліва сторона) -->
+            <div class="page page-left" data-page="2">
+                <div class="page-front">
+                    <div class="page-content">
+                        <div class="page-header">
+                            <h2 class="page-title">Люстри преміум-класу</h2>
+                            <p class="page-subtitle">Розкіш та елегантність</p>
+                        </div>
+                        <div class="products-container">
+                            <div class="product-item">
+                                <div class="product-image">
+                                    <img src="https://www.brille.ua/image/cachewebp/catalog/oc_15491e18769c3b936536e35e7830c2b4c32e9-1280x0.webp" alt="Люстра преміум-класу Модель 1" loading="lazy">
+                                </div>
+                                <h3 class="product-name">Люстра молекула підвісна для спальні BL-437S/28</h3>
+                                <p class="product-description">
+                                    Стильний світильник для сучасного інтер'єру.
+                                </p>
+                                <div class="product-specs">
+                                    <div class="specs-title">Характеристики:</div>
+                                    <div class="specs-list">
+                                        <div class="spec-item">Матеріал: Метал, скло</div>
+                                        <div class="spec-item">Розмір: 120x70 см</div>
+                                        <div class="spec-item">Лампи: 28</div>
+                                        <div class="spec-item">Стиль: Сучасний</div>
+                                    </div>
+                                </div>
+                                <div class="product-price">14499 грн</div>
+                            </div>
+                        </div>
+                        <div class="page-number">2</div>
+                    </div>
+                </div>
+                <div class="page-back">
+                    <div class="page-content">
+                        <div class="page-header">
+                            <h2 class="page-title">Люстри преміум-класу</h2>
+                            <p class="page-subtitle">Розкіш та елегантність</p>
+                        </div>
+                        <div class="products-container">
+                            <div class="product-item">
+                                <div class="product-image">
+                                    <img src="https://www.brille.ua/image/cachewebp/catalog/oc_35636da64e5f423506bb3df2c35b1846ab3d0-1280x0.webp" alt="Люстра преміум-класу Модель 1" loading="lazy">
+                                </div>
+                                <h3 class="product-name">Модель Люстра 1</h3>
+                                <p class="product-description">
+                                    Дуже гарний опис люстри преміум-класу, що поєднує розкіш та елегантність.
+                                </p>
+                                <div class="product-specs">
+                                    <div class="specs-title">Характеристики:</div>
+                                    <div class="specs-list">
+                                        <div class="spec-item">Матеріал: Кришталь</div>
+                                        <div class="spec-item">Розмір: 80x60 см</div>
+                                        <div class="spec-item">Лампи: 6xE14</div>
+                                        <div class="spec-item">Стиль: Класичний</div>
+                                    </div>
+                                </div>
+                                <div class="product-price">99999 грн</div>
+                            </div>
+                        </div>
+                        <div class="page-number">1</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Сторінка 3 (права сторона) -->
+            <div class="page page-right" data-page="3">
+                <div class="page-front">
+                    <div class="page-content">
+                        <div class="page-header">
+                            <h2 class="page-title">Сучасне освітлення</h2>
+                            <p class="page-subtitle">Мінімалізм та функціональність</p>
+                        </div>
+                        <div class="products-container">
+                            <div class="product-item">
+                                <div class="product-image">
+                                    <img src="https://www.brille.ua/image/cachewebp/catalog/oc_68361bdd72ea0a0f8f06735715f6e5fe22b2-1280x0.webp" alt="Люстра преміум-класу Модель 1" loading="lazy">
+                                </div>
+                                <h3 class="product-name">Модель Світильник 1</h3>
+                                <p class="product-description">
+                                    Казково гарний опис сучасного світильника з мінімалістичним дизайном.
+                                </p>
+                                <div class="product-specs">
+                                    <div class="specs-title">Характеристики:</div>
+                                    <div class="specs-list">
+                                        <div class="spec-item">Матеріал: Метал, Скло</div>
+                                        <div class="spec-item">Розмір: 150x150 см</div>
+                                        <div class="spec-item">Лампи: LED </div>
+                                        <div class="spec-item">Стиль: Сучасний</div>
+                                    </div>
+                                </div>
+                                <div class="product-price">15199 грн</div>
+                            </div>
+                        </div>
+                        <div class="page-number">3</div>
+                    </div>
+                </div>
+                <div class="page-back">
+                    <div class="page-content">
+                        <div class="page-header">
+                            <h2 class="page-title">Люстри преміум-класу</h2>
+                            <p class="page-subtitle">Розкіш та елегантність</p>
+                        </div>
+                        <div class="products-container">
+                            <div class="product-item">
+                                <div class="product-image">
+                                    <img src="https://www.brille.ua/image/cachewebp/catalog/oc_35636da64e5f423506bb3df2c35b1846ab3d0-1280x0.webp" alt="Люстра преміум-класу Модель 1" loading="lazy">
+                                </div>
+                                <h3 class="product-name">Модель Люстра 2</h3>
+                                <p class="product-description">
+                                    Неймовірно гарний опис люстри, що додає шарму будь-якому інтер'єру.
+                                </p>
+                                <div class="product-specs">
+                                    <div class="specs-title">Характеристики:</div>
+                                    <div class="specs-list">
+                                        <div class="spec-item">Матеріал: Метал, скло</div>
+                                        <div class="spec-item">Розмір: 70x50 см</div>
+                                        <div class="spec-item">Лампи: 5xE27</div>
+                                        <div class="spec-item">Стиль: Модерн</div>
+                                    </div>
+                                </div>
+                                <div class="product-price">9999 грн</div>
+                            </div>
+                        </div>
+                        <div class="page-number">2</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Сторінка 4 (ліва сторона) -->
+            <div class="page page-left" data-page="4">
+                <div class="page-front">
+                    <div class="page-content">
+                        <div class="page-header">
+                            <h2 class="page-title">Сучасне освітлення</h2>
+                            <p class="page-subtitle">Мінімалізм та функціональність</p>
+                        </div>
+                        <div class="products-container">
+                            <div class="product-item">
+                                <div class="product-image">
+                                    <img src="https://www.brille.ua/image/cachewebp/catalog/oc_3150426d517fd8b3ed7153c37c86c038b9a51-1280x0.webp" alt="Люстра преміум-класу Модель 1" loading="lazy">
+                                </div>
+                                <h3 class="product-name">Люстра підвісна світлодіодна BR-01 661S/1</h3>
+                                <p class="product-description">
+                                    Модний світильник золотистого кольору зі стильним дизайном.
+                                </p>
+                                <div class="product-specs">
+                                    <div class="specs-title">Характеристики:</div>
+                                    <div class="specs-list">
+                                        <div class="spec-item">Матеріал: Пластик, метал</div>
+                                        <div class="spec-item">Розмір: 130x105 см</div>
+                                        <div class="spec-item">Лампи: LED </div>
+                                        <div class="spec-item">Стиль: Сучасний</div>
+                                    </div>
+                                </div>
+                                <div class="product-price">15199 грн</div>
+                            </div>
+                        </div>
+                        <div class="page-number">4</div>
+                    </div>
+                </div>
+                <div class="page-back">
+                    <div class="page-content">
+                        <div class="page-header">
+                            <h2 class="page-title">Сучасне освітлення</h2>
+                            <p class="page-subtitle">Мінімалізм та функціональність</p>
+                        </div>
+                        <div class="products-container">
+                            <div class="product-item">
+                                <div class="product-image">
+                                    <img src="https://www.brille.ua/image/cachewebp/catalog/oc_35636da64e5f423506bb3df2c35b1846ab3d0-1280x0.webp" alt="Люстра преміум-класу Модель 1" loading="lazy">
+                                </div>
+                                <h3 class="product-name">Модель Світильник 1</h3>
+                                <p class="product-description">
+                                    Казково гарний опис сучасного світильника з мінімалістичним дизайном.
+                                </p>
+                                <div class="product-specs">
+                                    <div class="specs-title">Характеристики:</div>
+                                    <div class="specs-list">
+                                        <div class="spec-item">Матеріал: Алюміній</div>
+                                        <div class="spec-item">Розмір: 30x20 см</div>
+                                        <div class="spec-item">Лампи: LED 10W</div>
+                                        <div class="spec-item">Стиль: Сучасний</div>
+                                    </div>
+                                </div>
+                                <div class="product-price">99999 грн</div>
+                            </div>
+                        </div>
+                        <div class="page-number">3</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Сторінка 5 (права сторона) -->
+            <div class="page page-right" data-page="5">
+                <div class="page-front">
+                    <div class="page-content">
+                        <div class="page-header">
+                            <h2 class="page-title">Дизайнерські світильники</h2>
+                            <p class="page-subtitle">Унікальні рішення</p>
+                        </div>
+                        <div class="products-container">
+                            <div class="product-item">
+                                <div class="product-image">
+                                    <img src="https://www.brille.ua/image/cachewebp/catalog/oc_68354d20419dd1ae649b6a1f57388f58e3bf-1280x0.webp" alt="Люстра преміум-класу Модель 1" loading="lazy">
+                                </div>
+                                <h3 class="product-name">Люстра лофт молекула підвісна BL-903S/1</h3>
+                                <p class="product-description">
+                                    Унікальний дизайнерський світильник, що додає індивідуальності.
+                                </p>
+                                <div class="product-specs">
+                                    <div class="specs-title">Характеристики:</div>
+                                    <div class="specs-list">
+                                        <div class="spec-item">Матеріал: Пластик, скло</div>
+                                        <div class="spec-item">Розмір: 60x10 см</div>
+                                        <div class="spec-item">Лампи: LED</div>
+                                        <div class="spec-item">Стиль: Хай-тек</div>
+                                    </div>
+                                </div>
+                                <div class="product-price">4800 грн</div>
+                            </div>
+                        </div>
+                        <div class="page-number">5</div>
+                    </div>
+                </div>
+                <div class="page-back">
+                    <div class="page-content">
+                        <div class="page-header">
+                            <h2 class="page-title">Сучасне освітлення</h2>
+                            <p class="page-subtitle">Мінімалізм та функціональність</p>
+                        </div>
+                        <div class="products-container">
+                            <div class="product-item">
+                                <div class="product-image">
+                                    <img src="https://www.brille.ua/image/cachewebp/catalog/oc_3155888c4bf92b3423c41359090764750890b-1280x0.webp" alt="Люстра преміум-класу Модель 1" loading="lazy">
+                                </div>
+                                <h3 class="product-name">Модель Світильник 2</h3>
+                                <p class="product-description">
+                                    Заворожливо гарний опис функціонального світильника.
+                                </p>
+                                <div class="product-specs">
+                                    <div class="specs-title">Характеристики:</div>
+                                    <div class="specs-list">
+                                        <div class="spec-item">Матеріал: Пластик, метал</div>
+                                        <div class="spec-item">Розмір: 75x60 см</div>
+                                        <div class="spec-item">Лампи: LED</div>
+                                        <div class="spec-item">Стиль: Хай-тек</div>
+                                    </div>
+                                </div>
+                                <div class="product-price">15199 грн</div>
+                            </div>
+                        </div>
+                        <div class="page-number">4</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Сторінка 6 (ліва сторона) -->
+            <div class="page page-left" data-page="6">
+                <div class="page-front">
+                    <div class="page-content">
+                        <div class="page-header">
+                            <h2 class="page-title">Контакти</h2>
+                            <p class="page-subtitle">Зв'яжіться з нами</p>
+                        </div>
+                        <div class="contacts-container">
+                            <h2 class="contacts-title">Контактна інформація</h2>
+                            <div class="contact-item">
+                                <div class="contact-icon">📞</div>
+                                <div class="contact-info">
+                                    <div class="contact-label">Телефон</div>
+                                    <div class="contact-text">+38 (073) 102-86-24 - Володимир</div>
+                                    <div class="contact-text">+38 (050) 968-02-28 - Тетяна</div>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">✉️</div>
+                                <div class="contact-info">
+                                    <div class="contact-label">Електронна пошта</div>
+                                    <div class="contact-text">info@brille.com</div>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">📍</div>
+                                <div class="contact-info">
+                                    <div class="contact-label">Адреса</div>
+                                    <div class="contact-text">м. Київ, вул. Автозаводська, 24</div>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">🕒</div>
+                                <div class="contact-info">
+                                    <div class="contact-label">Час роботи</div>
+                                    <div class="contact-text">Пн-Пт: 9:00-21:00<br>Сб-Нд: 09:00-18:00</div>
+                                </div>
+                            </div>
+                            <div class="thank-you">
+                                <h3>Дякуємо за увагу!</h3>
+                                <p>Ми допоможемо створити ідеальне освітлення для вашого проєкту.</p>
+                            </div>
+                        </div>
+                        <div class="page-number">6</div>
+                    </div>
+                </div>
+                <div class="page-back">
+                    <div class="page-content">
+                        <div class="page-header">
+                            <h2 class="page-title">Дизайнерські світильники</h2>
+                            <p class="page-subtitle">Унікальні рішення</p>
+                        </div>
+                        <div class="products-container">
+                            <div class="product-item">
+                                <div class="product-image">
+                                    <div class="image-placeholder">Колись буде фото</div>
+                                </div>
+                                <h3 class="product-name">Модель Дизайнерський 1</h3>
+                                <p class="product-description">
+                                    Унікальний дизайнерський світильник, що додає індивідуальності.
+                                </p>
+                                <div class="product-specs">
+                                    <div class="specs-title">Характеристики:</div>
+                                    <div class="specs-list">
+                                        <div class="spec-item">Матеріал: Дерево, метал</div>
+                                        <div class="spec-item">Розмір: 40x30 см</div>
+                                        <div class="spec-item">Лампи: LED 12W</div>
+                                        <div class="spec-item">Стиль: Лофт</div>
+                                    </div>
+                                </div>
+                                <div class="product-price">99999 грн</div>
+                            </div>
+                        </div>
+                        <div class="page-number">5</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Навігація -->
+        <div class="navigation">
+            <button class="nav-button" id="prevBtn" aria-label="Попередній розворот"><span>←</span></button>
+            <div class="page-counter">
+                <span id="page-number">0-1</span> / <span id="total-pages">0-6</span>
+            </div>
+            <button class="nav-button" id="nextBtn" aria-label="Наступний розворот"><span>→</span></button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let currentSpread = 0; // Поточний розворот (0: сторінки 0-1, 1: сторінки 2-3, 2: сторінки 4-5, 3: сторінка 6)
+            const totalSpreads = 4; // Загальна кількість розворотів
+            const pageElements = Array.from(document.querySelectorAll('.page'));
+            const prevBtn = document.querySelector('#prevBtn');
+            const nextBtn = document.querySelector('#nextBtn');
+            const currentPageNum = document.querySelector('#page-number');
+            const totalPagesElement = document.querySelector('#total-pages');
+            const pageDots = document.querySelectorAll('.page-dot');
+
+            totalPagesElement.textContent = '0-6';
+
+            function updateSpread() {
+                const leftPage = currentSpread * 2;
+                const rightPage = currentSpread === totalSpreads - 1 ? 6 : leftPage + 1;
+
+                // Ensure currentSpread stays within bounds
+                if (currentSpread < 0) currentSpread = 0;
+                if (currentSpread >= totalSpreads) currentSpread = totalSpreads - 1;
+
+                pageElements.forEach((page, index) => {
+                    const pageNum = parseInt(page.dataset.page);
+                    page.classList.remove('flipping-forward', 'flipping-back');
+
+                    if (pageNum < leftPage) {
+                        page.classList.add('flipped');
+                        page.style.zIndex = totalSpreads * 2 - pageNum;
+                    } else if (pageNum === leftPage || pageNum === rightPage) {
+                        page.classList.remove('flipped');
+                        page.style.zIndex = totalSpreads * 2;
+                    } else {
+                        page.classList.remove('flipped');
+                        page.style.zIndex = totalSpreads * 2 - (pageNum - rightPage);
+                    }
+                });
+
+                prevBtn.disabled = currentSpread === 0;
+                nextBtn.disabled = currentSpread === totalSpreads - 1;
+                currentPageNum.textContent = currentSpread === totalSpreads - 1 ? '6' : `${leftPage}-${rightPage}`;
+
+                pageDots.forEach(dot => {
+                    dot.classList.toggle('active', parseInt(dot.dataset.page) / 2 === currentSpread);
+                });
+            }
+
+            async function animateFlip(page, direction) {
+                return new Promise(resolve => {
+                    page.classList.add(`flipping-${direction}`);
+                    page.addEventListener('animationend', () => {
+                        page.classList.remove(`flipping-${direction}`);
+                        resolve();
+                    }, { once: true });
+                });
+            }
+
+            async function nextSpread() {
+                if (currentSpread < totalSpreads - 1) {
+                    const rightPage = pageElements.find(p => parseInt(p.dataset.page) === currentSpread * 2 + 1);
+                    if (rightPage) {
+                        await animateFlip(rightPage, 'forward');
+                        currentSpread += 1;
+                        updateSpread();
+                    }
+                }
+            }
+
+            async function prevSpread() {
+                if (currentSpread > 0) {
+                    const leftPage = pageElements.find(p => parseInt(p.dataset.page) === currentSpread * 2);
+                    if (leftPage) {
+                        await animateFlip(leftPage, 'back');
+                        currentSpread -= 1;
+                        updateSpread();
+                    }
+                }
+            }
+
+            nextBtn.addEventListener('click', nextSpread);
+            prevBtn.addEventListener('click', prevSpread);
+
+            pageElements.forEach(page => {
+                page.addEventListener('click', (e) => {
+                    const rect = page.getBoundingClientRect();
+                    const clickX = e.clientX - rect.left;
+                    const pageWidth = rect.width;
+                    const pageNum = parseInt(page.dataset.page);
+                    const isRightPage = page.classList.contains('page-right');
+
+                    if (isRightPage && clickX > pageWidth / 2 && Math.floor(pageNum / 2) === currentSpread && currentSpread < totalSpreads - 1) {
+                        nextSpread();
+                    } else if (!isRightPage && clickX < pageWidth / 2 && Math.floor(pageNum / 2) === currentSpread && currentSpread > 0) {
+                        prevSpread();
+                    }
+                });
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') {
+                    prevSpread();
+                } else if (e.key === 'ArrowRight') {
+                    nextSpread();
+                }
+            });
+
+            let startX = 0;
+            let startY = 0;
+
+            document.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+            });
+
+            document.addEventListener('touchend', (e) => {
+                const endX = e.changedTouches[0].clientX;
+                const endY = e.changedTouches[0].clientY;
+                const diffX = startX - endX;
+                const diffY = startY - endY;
+
+                if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+                    if (diffX > 0 && currentSpread < totalSpreads - 1) {
+                        nextSpread();
+                    } else if (diffX < 0 && currentSpread > 0) {
+                        prevSpread();
+                    }
+                }
+            });
+
+            pageDots.forEach(dot => {
+                dot.addEventListener('click', function() {
+                    const spreadIndex = parseInt(this.dataset.page) / 2;
+                    if (spreadIndex !== currentSpread) {
+                        const direction = spreadIndex > currentSpread ? 'forward' : 'back';
+                        const pageToFlip = pageElements.find(p => parseInt(p.dataset.page) === currentSpread * 2 + (direction === 'forward' ? 1 : 0));
+                        if (pageToFlip) {
+                            animateFlip(pageToFlip, direction).then(() => {
+                                currentSpread = spreadIndex;
+                                updateSpread();
+                            });
+                        }
+                    }
+                });
+            });
+
+            updateSpread();
+        });
+    </script>
+</body>
+</html>
