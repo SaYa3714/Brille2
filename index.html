@@ -153,7 +153,7 @@
         .product-item {
             background: white;
             border-radius: 8px;
-            padding:  ascended
+            padding: 15px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
@@ -216,6 +216,16 @@
             margin-bottom: 10px;
             position: relative;
             display: inline-block;
+        }
+
+        .product-name a {
+            color: var(--primary-dark);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .product-name a:hover {
+            color: var(--secondary-light);
         }
 
         .product-name::after {
@@ -358,7 +368,7 @@
             font-size: 2.8rem;
             font-weight: 700;
             margin-bottom: 15px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            text-shadow:-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
             position: relative;
             display: inline-block;
         }
@@ -393,6 +403,7 @@
             margin-right: auto;
             font-size: 1.1rem;
             text-align: justify;
+            font-weight: bold;
         }
 
         .cover-link {
@@ -611,146 +622,221 @@
         @media (max-width: 768px) {
             :root {
                 --book-width: 100vw;
-                --book-height: 80vh;
+                --book-height: 100vh;
             }
 
             .catalog-wrapper {
-                max-width: 100vw;
-                max-height: 90vh;
+                max-width: 100%;
+                max-height: 100%;
+                margin: 0;
+                padding: 10px;
             }
 
             .slider-container {
-                padding: 10px;
-                background: white;
+                background: #fff;
+                border-radius: 0;
                 box-shadow: none;
+                height: 100%;
+                padding: 0;
+                overflow: visible;
             }
 
             .slider-container.transition {
-                background: white;
-                box-shadow: none;
+                transition: none;
+            }
+
+            .slider {
+                height: 100%;
+                align-items: stretch;
             }
 
             .page {
-                background: white;
+                background: transparent;
+                border-radius: 0;
                 box-shadow: none;
+                min-height: 100%;
+                display: flex;
+                flex-direction: column;
             }
 
             .page.transition {
-                background: white;
+                background: transparent;
                 box-shadow: none;
             }
 
             .page-content {
                 padding: 15px;
-                background: none;
+                background: #fff;
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
             }
 
             .cover-page .page-content {
-                background: none;
+                background: linear-gradient(135deg, rgba(57, 36, 124, 0.08), rgba(214, 59, 24, 0.08));
+                justify-content: center;
+                padding: 20px;
+                min-height: 100vh;
             }
 
             .page-title {
-                font-size: 1.4rem;
+                font-size: 1.6rem;
+                margin-bottom: 10px;
             }
 
             .cover-title {
-                font-size: 2rem;
+                font-size: 2.2rem;
+                line-height: 1.2;
             }
 
             .cover-subtitle {
-                font-size: 1rem;
+                font-size: 1.1rem;
+                letter-spacing: 1px;
             }
 
             .cover-logo {
-                width: 100px;
-                height: 100px;
-                font-size: 2.5rem;
+                width: 120px;
+                height: 120px;
+                font-size: 3rem;
+                margin-bottom: 20px;
+            }
+
+            .cover-description {
+                font-size: 1rem;
+                max-width: 90%;
+                font-weight: bold;
             }
 
             .cover-link {
-                font-size: 0.9rem;
+                font-size: 1rem;
                 margin-top: 15px;
             }
 
             .products-container {
                 grid-template-columns: 1fr;
                 gap: 15px;
-                height: 100%;
-                overflow-y: hidden; /* Disable container scrolling */
+                flex: 1;
+                overflow-y: auto;
+                padding: 10px;
+                height: auto;
+                -webkit-overflow-scrolling: touch;
             }
 
             .product-item {
                 display: none;
+                background: #fff;
+                border-radius: 10px;
+                padding: 15px;
+                margin: 0 auto;
+                width: 100%;
+                max-width: 400px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
                 height: auto;
-                max-height: none;
-                overflow-y: auto; /* Enable scrolling for product item */
-                -webkit-overflow-scrolling: touch;
+                min-height: 80vh;
+                overflow-y: auto;
                 touch-action: pan-y;
-                padding-bottom: 20px; /* Extra padding for scrollbar */
             }
 
             .product-item.active {
                 display: flex;
+                flex-direction: column;
+                justify-content: space-between;
             }
 
             .product-image {
-                max-height: 200px;
+                max-height: 250px;
                 aspect-ratio: 4 / 3;
+                margin-bottom: 15px;
+                border-radius: 10px;
             }
 
             .product-image img {
-                max-height: 200px;
-                width: auto;
+                max-height: 250px;
+                width: 100%;
                 object-fit: contain;
-            }
-
-            .product-item {
-                padding: 12px;
+                border-radius: 10px;
             }
 
             .product-name {
-                font-size: 1.2rem;
+                font-size: 1.3rem;
+                margin-bottom: 12px;
+            }
+
+            .product-description {
+                font-size: 0.95rem;
+                line-height: 1.5;
+            }
+
+            .product-specs {
+                padding: 12px;
+                border-radius: 8px;
             }
 
             .product-price {
-                font-size: 1.2rem;
+                font-size: 1.3rem;
+                padding: 10px;
+                margin-top: auto;
             }
 
             .navigation {
-                bottom: -60px;
-                gap: 8px;
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                gap: 10px;
+                background: rgba(255, 255, 255, 0.9);
+                padding: 10px;
+                border-radius: 25px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-button {
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
             }
 
             .page-counter {
-                font-size: 0.8rem;
-                padding: 6px 14px;
-                min-width: 70px;
+                font-size: 0.9rem;
+                padding: 8px 16px;
+                min-width: 90px;
             }
 
             .contacts-container {
-                padding: 12px;
-                width: 95%;
-                overflow-y: auto; /* Enable scrolling for contacts */
+                width: 100%;
+                max-width: 90%;
+                padding: 15px;
+                border-radius: 10px;
+                margin: 15px auto;
+                min-height: 80vh;
+                overflow-y: auto;
                 -webkit-overflow-scrolling: touch;
             }
 
             .contacts-title {
-                font-size: 1.4rem;
+                font-size: 1.5rem;
+                margin-bottom: 15px;
             }
 
             .contact-item {
-                margin-bottom: 10px;
-                padding-bottom: 10px;
+                margin-bottom: 15px;
+                padding-bottom: 15px;
             }
 
             .contact-icon {
-                width: 30px;
-                height: 30px;
-                font-size: 0.9rem;
+                width: 32px;
+                height: 32px;
+                font-size: 1rem;
             }
 
             .contact-text {
-                font-size: 0.85rem;
+                font-size: 0.9rem;
+            }
+
+            .thank-you {
+                padding: 12px;
+                border-radius: 8px;
             }
         }
     </style>
@@ -770,7 +856,7 @@
                             <p class="cover-subtitle">Преміальні рішення для освітлення</p>
                             <p class="cover-description">
                                 Ознайомтеся з нашим ексклюзивним каталогом сучасних та класичних світильників 
-                                для створення ідеальної атмосфери у вашому домі чи офісі.
+                                для створення ідеальної атмосфери у вашій квартирі, будинку, офісах, на вулиці, в ресторанах.
                             </p>
                             <p class="cover-link">
                                 Переглянути весь асортимент товару ви можете за посиланням: 
@@ -792,7 +878,7 @@
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/oc_35636da64e5f423506bb3df2c35b1846ab3d0-1280x0.webp" alt="Люстра преміум-класу Модель 1" loading="lazy">
                                 </div>
-                                <h3 class="product-name">Люстра світлодіодна BR-01 693C/2</h3>
+                                <h3 class="product-name"><a href="https://www.brille.ua" target="_blank">Люстра світлодіодна BR-01 693C/2</a></h3>
                                 <p class="product-description">
                                     Сучасна модель в мінімалістичному стилі для освітлення великих та малих кімнат.
                                 </p>
@@ -810,7 +896,7 @@
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/oc_15491e18769c3b936536e35e7830c2b4c32e9-1280x0.webp" alt="Люстра преміум-класу Модель 2" loading="lazy">
                                 </div>
-                                <h3 class="product-name">Люстра молекула підвісна BL-437S/28</h3>
+                                <h3 class="product-name"><a href="https://www.brille.ua" target="_blank">Люстра молекула підвісна BL-437S/28</a></h3>
                                 <p class="product-description">
                                     Стильний світильник для сучасного інтер'єру.
                                 </p>
@@ -841,7 +927,7 @@
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/oc_68361bdd72ea0a0f8f06735715f6e5fe22b2-1280x0.webp" alt="Світильник Модель 1" loading="lazy">
                                 </div>
-                                <h3 class="product-name">Люстра молекула підвісна BL-905S/10</h3>
+                                <h3 class="product-name"><a href="https://www.brille.ua" target="_blank">Люстра молекула підвісна BL-905S/10</a></h3>
                                 <p class="product-description">
                                     Модель виконана в формі намиста, де роль намистин грають закриті білі плафони зі скла.
                                 </p>
@@ -860,7 +946,7 @@
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/oc_3150426d517fd8b3ed7153c37c86c038b9a51-1280x0.webp" alt="Люстра преміум-класу Модель 4" loading="lazy">
                                 </div>
-                                <h3 class="product-name">Люстра підвісна світлодіодна BR-01 661S/1</h3>
+                                <h3 class="product-name"><a href="https://www.brille.ua" target="_blank">Люстра підвісна світлодіодна BR-01 661S/1</a></h3>
                                 <p class="product-description">
                                     Модний світильник золотистого кольору зі стильним дизайном.
                                 </p>
@@ -891,7 +977,7 @@
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/oc_68361bdd72ea0a0f8f06735715f6e5fe22b2-1280x0.webp" alt="Світильник Модель 1" loading="lazy">
                                 </div>
-                                <h3 class="product-name">Люстра лофт підвісна BL-813S/1</h3>
+                                <h3 class="product-name"><a href="https://www.brille.ua" target="_blank">Люстра лофт підвісна BL-813S/1</a></h3>
                                 <p class="product-description">
                                     Така модель вигідно прикрасить інтер'єр кафе, виставкового центру, житлового приміщення, виконаних в індустріальному стилі, зробить більш різноманітним дизайн приміщення будь-якого іншого сучасного стилю.
                                 </p>
@@ -910,7 +996,7 @@
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/oc_35643c255c3f4f895f002d294fc3baa2c3738-1280x0.webp" alt="Люстра преміум-класу Модель 4" loading="lazy">
                                 </div>
-                                <h3 class="product-name">Світильник підвісний BR-01 481</h3>
+                                <h3 class="product-name"><a href="https://www.brille.ua" target="_blank">Світильник підвісний BR-01 481</a></h3>
                                 <p class="product-description">
                                     Підвісні світильники можна використовувати по-різному, але вони особливо красиво виглядають у вітальні або над обіднім столом.
                                 </p>
@@ -941,7 +1027,7 @@
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/29-486-1-1280x0.webp" alt="Світильник Модель 1" loading="lazy">
                                 </div>
-                                <h3 class="product-name">Люстра BL-1003</h3>
+                                <h3 class="product-name"><a href="https://www.brille.ua" target="_blank">Люстра BL-1003</a></h3>
                                 <p class="product-description">
                                     Втілення сучасного дизайну та високої якості. Виготовлена з міцних матеріалів, та прослужить вам довгі роки.
                                 </p>
@@ -960,7 +1046,7 @@
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/oc_320921d75346a1259e533e121476761b33a0b-1280x0.webp" alt="Люстра преміум-класу Модель 4" loading="lazy">
                                 </div>
-                                <h3 class="product-name">Люстра світлодіодна підвісна з рослинами BL-992S/1</h3>
+                                <h3 class="product-name"><a href="https://www.brille.ua" target="_blank">Люстра світлодіодна підвісна з рослинами BL-992S/1</a></h3>
                                 <p class="product-description">
                                     Підвіс з оригінальним дизайном і відмінними технічними характеристиками.
                                 </p>
@@ -991,7 +1077,7 @@
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/oc_315393c626f975ea5bb32630ae3fd7679cf46-1280x0.webp" alt="Світильник Модель 1" loading="lazy">
                                 </div>
-                                <h3 class="product-name">Люстра світлодіодна підвісна BR-01 671S/58</h3>
+                                <h3 class="product-name"><a href="https://www.brille.ua" target="_blank">Люстра світлодіодна підвісна BR-01 671S/58</a></h3>
                                 <p class="product-description">
                                     Модний світильник зі стильним дизайном в золотистому кольорі.
                                 </p>
@@ -1010,7 +1096,7 @@
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/oc_3157088125a5b9aad30b558b98a9dec96ba90-1280x0.webp" alt="Люстра преміум-класу Модель 4" loading="lazy">
                                 </div>
-                                <h3 class="product-name">Люстра підвісна світлодіодна BR-01 661S/1</h3>
+                                <h3 class="product-name"><a href="https://www.brille.ua" target="_blank">Люстра підвісна світлодіодна BR-01 661S/1</a></h3>
                                 <p class="product-description">
                                     Модний світильник золотистого кольору зі стильним дизайном.
                                 </p>
@@ -1041,7 +1127,7 @@
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/oc_35634ce3fe91ba49a2278f4256ada63424749-1280x0.webp" alt="Світильник Модель 1" loading="lazy">
                                 </div>
-                                <h3 class="product-name">Люстра підвісна світлодіодна BR-01 692S/4</h3>
+                                <h3 class="product-name"><a href="https://www.brille.ua" target="_blank">Люстра підвісна світлодіодна BR-01 692S/4</a></h3>
                                 <p class="product-description">
                                     Сучасна модель для освітлення кімнат з високою стелею.
                                 </p>
@@ -1060,7 +1146,7 @@
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/oc_6840b84a06c5850531d01451bf54832d2000-1280x0.webp" alt="Люстра преміум-класу Модель 4" loading="lazy">
                                 </div>
-                                <h3 class="product-name">Світильник стельовий підвісний лофт світлодіодний BR-928S</h3>
+                                <h3 class="product-name"><a href="https://www.brille.ua" target="_blank">Світильник стельовий підвісний лофт світлодіодний BR-928S</a></h3>
                                 <p class="product-description">
                                     Відноситься до світильників нового покоління. Вона виконана у формі круга.
                                 </p>
@@ -1091,7 +1177,7 @@
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/oc_3156879c5832f6ad38a9792485dea3607d317-1280x0.webp" alt="Світильник Модель 1" loading="lazy">
                                 </div>
-                                <h3 class="product-name">Люстра підвісна в спальню BR-01 679S/1</h3>
+                                <h3 class="product-name"><a href="https://www.brille.ua" target="_blank">Люстра підвісна в спальню BR-01 679S/1</a></h3>
                                 <p class="product-description">
                                     Стильний світильник з незвичайним, оригінальним дизайном золотого кольору.
                                 </p>
@@ -1110,7 +1196,7 @@
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/oc_315646726dbb021540bf8abfd22ac5c9112f4-1280x0.webp" alt="Люстра преміум-класу Модель 4" loading="lazy">
                                 </div>
-                                <h3 class="product-name">Люстра підвісна BL-933S/1</h3>
+                                <h3 class="product-name"><a href="https://www.brille.ua" target="_blank">Люстра підвісна BL-933S/1</a></h3>
                                 <p class="product-description">
                                     Модний світильник золотистого кольору зі стильним дизайном.
                                 </p>
@@ -1141,7 +1227,7 @@
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/27-220@3-1280x0.webp" alt="Світильник Модель 1" loading="lazy">
                                 </div>
-                                <h3 class="product-name">Світлодіодний підвіс з рослинами BL-984S</h3>
+                                <h3 class="product-name"><a href="https://www.brille.ua" target="_blank">Світлодіодний підвіс з рослинами BL-984S</a></h3>
                                 <p class="product-description">
                                     Конструкція складається безпосередньо з підвісу, на якому розташований світлодіодний світильник.
                                 </p>
@@ -1160,7 +1246,7 @@
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/29-487-1-1280x0.webp" alt="Люстра преміум-класу Модель 4" loading="lazy">
                                 </div>
-                                <h3 class="product-name">Люстра BL-1003</h3>
+                                <h3 class="product-name"><a href="https://www.brille.ua" target="_blank">Люстра BL-1003</a></h3>
                                 <p class="product-description">
                                     Втілення сучасного дизайну та високої якості. Виготовлена з міцних матеріалів.
                                 </p>
@@ -1266,7 +1352,6 @@
         function handleTouchStart(event) {
             touchStartX = event.touches[0].clientX;
             touchStartY = event.touches[0].clientY;
-            // Умовно дозволяємо прокрутку, якщо подія відбувається всередині .product-item.active
             if (event.target.closest('.product-item.active')) {
                 return;
             }
@@ -1286,7 +1371,6 @@
             const swipeDistanceX = touchStartX - touchEndX;
             const swipeDistanceY = touchStartY - touchEndY;
 
-            // Якщо вертикальний свайп більший за горизонтальний, дозволяємо прокрутку карточки
             if (Math.abs(swipeDistanceY) > Math.abs(swipeDistanceX)) {
                 return;
             }
