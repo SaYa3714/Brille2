@@ -38,6 +38,7 @@
             justify-content: center;
             padding: 20px;
             color: var(--text-dark);
+            overscroll-behavior-x: none;
         }
 
         .catalog-wrapper {
@@ -57,7 +58,11 @@
             box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
             filter: drop-shadow(var(--shadow));
             overflow: hidden;
-            touch-action: pan-y; /* Prevents vertical scrolling during horizontal swipe */
+            touch-action: pan-y;
+        }
+
+        .slider-container.transition {
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         .slider {
@@ -74,6 +79,11 @@
             background: white;
             border-radius: var(--radius);
             box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .page.transition {
+            background: white;
+            box-shadow: none;
         }
 
         .page-content {
@@ -291,18 +301,6 @@
             font-size: 1rem;
         }
 
-        .page-number {
-            position: absolute;
-            bottom: 15px;
-            right: 15px;
-            color: #aaa;
-            font-size: 0.75rem;
-            font-weight: 500;
-            background: rgba(0, 0, 0, 0.05);
-            padding: 3px 10px;
-            border-radius: 10px;
-        }
-
         .cover-decor {
             position: absolute;
             width: 350px;
@@ -432,49 +430,6 @@
 
         .cover-link a:hover::after {
             width: 100%;
-        }
-
-        .side-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: linear-gradient(45deg, var(--primary-dark), var(--primary-light));
-            color: white;
-            border: none;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.5rem;
-            transition: all 0.4s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 8px 25px rgba(57, 36, 124, 0.4);
-            z-index: 1000;
-            opacity: 0.8;
-        }
-
-        .side-nav:hover {
-            opacity: 1;
-            transform: translateY(-50%) scale(1.1);
-            box-shadow: 0 12px 35px rgba(57, 36, 124, 0.6);
-        }
-
-        .side-nav:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            opacity: 0.4;
-            transform: translateY(-50%);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .side-nav.prev {
-            left: -80px;
-        }
-
-        .side-nav.next {
-            right: -80px;
         }
 
         .navigation {
@@ -665,10 +620,32 @@
 
             .slider-container {
                 padding: 10px;
+                background: white; /* Remove gradient on mobile during swipe */
+                box-shadow: none; /* Remove shadow on mobile during swipe */
+            }
+
+            .slider-container.transition {
+                background: white;
+                box-shadow: none;
+            }
+
+            .page {
+                background: white;
+                box-shadow: none;
+            }
+
+            .page.transition {
+                background: white;
+                box-shadow: none;
             }
 
             .page-content {
                 padding: 15px;
+                background: none; /* Remove gradient background on mobile during swipe */
+            }
+
+            .cover-page .page-content {
+                background: none; /* Remove gradient background on mobile during swipe */
             }
 
             .page-title {
@@ -730,25 +707,6 @@
                 font-size: 1.2rem;
             }
 
-            .side-nav {
-                width: 45px;
-                height: 45px;
-                font-size: 1.2rem;
-            }
-
-            .side-nav.prev {
-                left: -60px;
-            }
-
-            .side-nav.next {
-                right: -60px;
-            }
-
-            .nav-button {
-                width: 35px;
-                height: 35px;
-            }
-
             .navigation {
                 bottom: -60px;
                 gap: 8px;
@@ -808,7 +766,6 @@
                                 <a href="https://www.brille.ua" target="_blank">brille.ua</a>
                             </p>
                         </div>
-                        <div class="page-number">Обкладинка</div>
                     </div>
                 </div>
 
@@ -858,7 +815,6 @@
                                 <div class="product-price">14499 грн</div>
                             </div>
                         </div>
-                        <div class="page-number">1</div>
                     </div>
                 </div>
 
@@ -909,7 +865,6 @@
                                 <div class="product-price">15199 грн</div>
                             </div>
                         </div>
-                        <div class="page-number">2</div>
                     </div>
                 </div>
 
@@ -960,7 +915,6 @@
                                 <div class="product-price">5899 грн</div>
                             </div>
                         </div>
-                        <div class="page-number">3</div>
                     </div>
                 </div>
 
@@ -1011,7 +965,6 @@
                                 <div class="product-price">8990 грн</div>
                             </div>
                         </div>
-                        <div class="page-number">4</div>
                     </div>
                 </div>
 
@@ -1062,7 +1015,6 @@
                                 <div class="product-price">9899 грн</div>
                             </div>
                         </div>
-                        <div class="page-number">5</div>
                     </div>
                 </div>
 
@@ -1113,7 +1065,6 @@
                                 <div class="product-price">16699 грн</div>
                             </div>
                         </div>
-                        <div class="page-number">6</div>
                     </div>
                 </div>
 
@@ -1164,7 +1115,6 @@
                                 <div class="product-price">4800 грн</div>
                             </div>
                         </div>
-                        <div class="page-number">7</div>
                     </div>
                 </div>
 
@@ -1215,7 +1165,6 @@
                                 <div class="product-price">14000 грн</div>
                             </div>
                         </div>
-                        <div class="page-number">8</div>
                     </div>
                 </div>
 
@@ -1270,15 +1219,12 @@
                                 <p>Ми завжди раді допомогти вам обрати ідеальне освітлення для вашого простору.</p>
                             </div>
                         </div>
-                        <div class="page-number">9</div>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Навігація -->
-        <button class="side-nav prev" id="prevPage" disabled>❮</button>
-        <button class="side-nav next" id="nextPage">❯</button>
         <div class="navigation">
             <button class="nav-button" id="prev" disabled><span>❮</span></button>
             <div class="page-counter" id="pageCounter">1 з 9</div>
@@ -1290,8 +1236,6 @@
         const slider = document.getElementById('slider');
         const prevButton = document.getElementById('prev');
         const nextButton = document.getElementById('next');
-        const prevPageButton = document.getElementById('prevPage');
-        const nextPageButton = document.getElementById('nextPage');
         const pageCounter = document.getElementById('pageCounter');
         const pages = document.querySelectorAll('.page');
         const productItems = document.querySelectorAll('.product-item');
@@ -1304,10 +1248,15 @@
         // Swipe functionality
         let touchStartX = 0;
         let touchEndX = 0;
-        const minSwipeDistance = 50; // Minimum distance for a swipe to be registered
+        const minSwipeDistance = 50;
 
         function handleTouchStart(event) {
             touchStartX = event.touches[0].clientX;
+            event.preventDefault();
+            slider.classList.remove('transition'); // Remove transition during swipe
+            const sliderContainer = document.querySelector('.slider-container');
+            sliderContainer.classList.remove('transition');
+            pages.forEach(page => page.classList.remove('transition'));
         }
 
         function handleTouchMove(event) {
@@ -1318,19 +1267,20 @@
             const swipeDistance = touchStartX - touchEndX;
             if (Math.abs(swipeDistance) > minSwipeDistance) {
                 if (swipeDistance > 0) {
-                    // Swipe left -> next page
                     goToNext();
                 } else {
-                    // Swipe right -> previous page
                     goToPrev();
                 }
             }
+            slider.classList.add('transition'); // Restore transition after swipe
+            const sliderContainer = document.querySelector('.slider-container');
+            sliderContainer.classList.add('transition');
+            pages.forEach(page => page.classList.add('transition'));
         }
 
-        // Add touch event listeners to the slider container
         const sliderContainer = document.querySelector('.slider-container');
-        sliderContainer.addEventListener('touchstart', handleTouchStart, false);
-        sliderContainer.addEventListener('touchmove', handleTouchMove, false);
+        sliderContainer.addEventListener('touchstart', handleTouchStart, { passive: false });
+        sliderContainer.addEventListener('touchmove', handleTouchMove, { passive: false });
         sliderContainer.addEventListener('touchend', handleTouchEnd, false);
 
         // Arrow key functionality
@@ -1342,19 +1292,15 @@
             }
         }
 
-        // Add keyboard event listener
         document.addEventListener('keydown', handleKeyDown);
 
         function updateSlider() {
             const isMobile = window.innerWidth <= 768;
             if (isMobile) {
-                // Mobile: Navigate by product (virtual pages)
                 if (currentMobilePage === 0) {
-                    // Cover page
                     slider.style.transform = `translateX(0)`;
                     productItems.forEach(item => item.classList.remove('active'));
                 } else if (currentMobilePage >= 1 && currentMobilePage <= totalProducts) {
-                    // Product pages
                     const productIndex = currentMobilePage - 1;
                     const product = productItems[productIndex];
                     const pageIndex = product.parentElement.parentElement.parentElement.getAttribute('data-page');
@@ -1362,24 +1308,18 @@
                     productItems.forEach(item => item.classList.remove('active'));
                     product.classList.add('active');
                 } else {
-                    // Contacts page
                     slider.style.transform = `translateX(-${(totalPages - 1) * 100}%)`;
                     productItems.forEach(item => item.classList.remove('active'));
                 }
                 pageCounter.textContent = `${currentMobilePage + 1} з ${totalMobilePages}`;
                 prevButton.disabled = currentMobilePage === 0;
                 nextButton.disabled = currentMobilePage === totalMobilePages - 1;
-                prevPageButton.disabled = currentMobilePage === 0;
-                nextPageButton.disabled = currentMobilePage === totalMobilePages - 1;
             } else {
-                // Desktop: Navigate by page
                 slider.style.transform = `translateX(-${currentPage * 100}%)`;
-                productItems.forEach(item => item.classList.add('active')); // Show all products on page
+                productItems.forEach(item => item.classList.add('active'));
                 pageCounter.textContent = `${currentPage + 1} з ${totalPages}`;
                 prevButton.disabled = currentPage === 0;
                 nextButton.disabled = currentPage === totalPages - 1;
-                prevPageButton.disabled = currentPage === 0;
-                nextPageButton.disabled = currentPage === totalPages - 1;
             }
         }
 
@@ -1417,11 +1357,9 @@
 
         prevButton.addEventListener('click', goToPrev);
         nextButton.addEventListener('click', goToNext);
-        prevPageButton.addEventListener('click', goToPrev);
-        nextPageButton.addEventListener('click', goToNext);
 
         window.addEventListener('resize', updateSlider);
-        updateSlider(); // Initial call
+        updateSlider();
     </script>
 </body>
 </html>
