@@ -120,7 +120,8 @@
             left: 30%;
             right: 30%;
             height: 1px;
-            background: var(--secondary-light);
+            background: varთ
+System: var(--secondary-light);
         }
 
         .page-title {
@@ -328,7 +329,7 @@
 
         .cover-content {
             position: relative;
-            zindex: 1;
+            z-index: 1;
             max-width: 90%;
         }
 
@@ -348,6 +349,8 @@
         }
 
         .catalog-wrapper:hover .cover-logo {
+
+
             transform: rotate(15deg) scale(1.05);
             box-shadow: 0 12px 35px rgba(57, 36, 124, 0.4);
         }
@@ -675,29 +678,22 @@
             .products-container {
                 grid-template-columns: 1fr;
                 gap: 15px;
-                height: calc(100% - 100px); /* Добавляем отступ для заголовка */
+                height: 100%;
                 overflow-y: auto;
                 -webkit-overflow-scrolling: touch;
-                touch-action: pan-y; /* Разрешаем вертикальную прокрутку */
             }
 
             .product-item {
                 display: none;
                 height: auto;
-                min-height: 100%; /* Занимаем всю доступную высоту */
-                overflow-y: visible;
+                max-height: 100%;
+                overflow-y: auto;
                 -webkit-overflow-scrolling: touch;
+                touch-action: pan-y;
             }
 
             .product-item.active {
                 display: flex;
-                flex-direction: column;
-                height: 100%;
-            }
-
-            .product-description, .product-specs {
-                overflow-y: auto;
-                -webkit-overflow-scrolling: touch;
             }
 
             .product-image {
@@ -1269,45 +1265,31 @@
         const minSwipeDistance = 50;
 
         function handleTouchStart(event) {
-        const productItem = event.target.closest('.product-item.active');
-        // Если касание началось внутри активной карточки товара, разрешаем вертикальную прокрутку
-        if (productItem && productItem.scrollHeight > productItem.clientHeight) {
-            return;
-        }
-        
-        touchStartX = event.touches[0].clientX;
-        touchStartY = event.touches[0].clientY;
-        event.preventDefault();
-        slider.classList.remove('transition');
-        const sliderContainer = document.querySelector('.slider-container');
-        sliderContainer.classList.remove('transition');
-        pages.forEach(page => page.classList.remove('transition'));
-    }
-
-            // Изменяем функцию handleTouchMove
-        function handleTouchMove(event) {
-            const productItem = event.target.closest('.product-item.active');
-            // Если касание внутри активной карточки товара, разрешаем вертикальную прокрутку
-            if (productItem && productItem.scrollHeight > productItem.clientHeight) {
-             return;
+            touchStartX = event.touches[0].clientX;
+            touchStartY = event.touches[0].clientY;
+            // Умовно дозволяємо прокрутку, якщо подія відбувається всередині .product-item.active
+            if (event.target.closest('.product-item.active')) {
+                return;
             }
-        
+            event.preventDefault();
+            slider.classList.remove('transition');
+            const sliderContainer = document.querySelector('.slider-container');
+            sliderContainer.classList.remove('transition');
+            pages.forEach(page => page.classList.remove('transition'));
+        }
+
+        function handleTouchMove(event) {
             touchEndX = event.touches[0].clientX;
             touchEndY = event.touches[0].clientY;
-        
-            // Блокируем вертикальную прокрутку страницы при горизонтальном свайпе
-            if (Math.abs(touchStartX - touchEndX) > Math.abs(touchStartY - touchEndY)) {
-            event.preventDefault();
-         }
-    }
+        }
 
         function handleTouchEnd() {
             const swipeDistanceX = touchStartX - touchEndX;
             const swipeDistanceY = touchStartY - touchEndY;
 
-            // Если вертикальный свайп больше горизонтального, игнорируем свайп слайдера
+            // Якщо вертикальний свайп більший за горизонтальний, дозволяємо прокрутку карточки
             if (Math.abs(swipeDistanceY) > Math.abs(swipeDistanceX)) {
-                return; // Пропускаем обработку свайпа, позволяя прокрутку карточки
+                return;
             }
 
             if (Math.abs(swipeDistanceX) > minSwipeDistance) {
