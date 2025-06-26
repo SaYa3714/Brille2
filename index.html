@@ -57,6 +57,7 @@
             box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
             filter: drop-shadow(var(--shadow));
             overflow: hidden;
+            touch-action: pan-y; /* Prevents vertical scrolling during horizontal swipe */
         }
 
         .slider {
@@ -395,6 +396,44 @@
             text-align: justify;
         }
 
+        .cover-link {
+            color: var(--primary-dark);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-top: 20px;
+            text-align: center;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-link a {
+            color: var(--secondary-dark);
+            text-decoration: none;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .cover-link a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, var(--primary-light), var(--secondary-light));
+            transition: width 0.3s ease;
+        }
+
+        .cover-link a:hover {
+            color: var(--secondary-light);
+        }
+
+        .cover-link a:hover::after {
+            width: 100%;
+        }
+
         .side-nav {
             position: absolute;
             top: 50%;
@@ -583,6 +622,16 @@
             line-height: 1.4;
         }
 
+        .contact-text a {
+            color: var(--secondary-dark);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-text a:hover {
+            color: var(--secondary-light);
+        }
+
         .thank-you {
             background: linear-gradient(45deg, var(--primary-dark), var(--secondary-dark));
             color: white;
@@ -638,6 +687,11 @@
                 width: 100px;
                 height: 100px;
                 font-size: 2.5rem;
+            }
+
+            .cover-link {
+                font-size: 0.9rem;
+                margin-top: 15px;
             }
 
             .products-container {
@@ -1185,13 +1239,11 @@
                                 <div class="contact-icon">📞</div>
                                 <div class="contact-info">
                                     <div class="contact-label">Ваші персональні менеджери:</div>
-                            
                                     <div class="contact-text">+38 (073) 102-86-24 – Володимир</div>
                                     <div class="contact-text">
                                         <a href="viber://chat?number=+380731028624" class="contact-link">📱 Viber</a> | 
                                         <a href="tg://user?id=445632860" class="contact-link">✈️ Telegram</a>
                                     </div>
-                            
                                     <div class="contact-text">+38 (050) 968-02-28 – Тетяна</div>
                                     <div class="contact-text">
                                         <a href="viber://chat?number=+380509680228" class="contact-link">📱 Viber</a> | 
@@ -1199,7 +1251,6 @@
                                     </div>
                                 </div>
                             </div>
-                            
                             <div class="contact-item">
                                 <div class="contact-icon">📧</div>
                                 <div class="contact-info">
@@ -1249,6 +1300,50 @@
         const totalPages = pages.length;
         const totalProducts = productItems.length;
         const totalMobilePages = totalProducts + 2; // Cover + products + contacts
+
+        // Swipe functionality
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const minSwipeDistance = 50; // Minimum distance for a swipe to be registered
+
+        function handleTouchStart(event) {
+            touchStartX = event.touches[0].clientX;
+        }
+
+        function handleTouchMove(event) {
+            touchEndX = event.touches[0].clientX;
+        }
+
+        function handleTouchEnd() {
+            const swipeDistance = touchStartX - touchEndX;
+            if (Math.abs(swipeDistance) > minSwipeDistance) {
+                if (swipeDistance > 0) {
+                    // Swipe left -> next page
+                    goToNext();
+                } else {
+                    // Swipe right -> previous page
+                    goToPrev();
+                }
+            }
+        }
+
+        // Add touch event listeners to the slider container
+        const sliderContainer = document.querySelector('.slider-container');
+        sliderContainer.addEventListener('touchstart', handleTouchStart, false);
+        sliderContainer.addEventListener('touchmove', handleTouchMove, false);
+        sliderContainer.addEventListener('touchend', handleTouchEnd, false);
+
+        // Arrow key functionality
+        function handleKeyDown(event) {
+            if (event.key === 'ArrowLeft') {
+                goToPrev();
+            } else if (event.key === 'ArrowRight') {
+                goToNext();
+            }
+        }
+
+        // Add keyboard event listener
+        document.addEventListener('keydown', handleKeyDown);
 
         function updateSlider() {
             const isMobile = window.innerWidth <= 768;
