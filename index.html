@@ -675,20 +675,29 @@
             .products-container {
                 grid-template-columns: 1fr;
                 gap: 15px;
-                height: 100%;
-                overflow-y: visible;
+                height: calc(100% - 100px); /* Добавляем отступ для заголовка */
+                overflow-y: auto;
                 -webkit-overflow-scrolling: touch;
+                touch-action: pan-y; /* Разрешаем вертикальную прокрутку */
             }
 
             .product-item {
                 display: none;
                 height: auto;
-                overflow-y: auto;
+                min-height: 100%; /* Занимаем всю доступную высоту */
+                overflow-y: visible;
                 -webkit-overflow-scrolling: touch;
             }
 
             .product-item.active {
                 display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+
+            .product-description, .product-specs {
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
             }
 
             .product-image {
@@ -1260,19 +1269,37 @@
         const minSwipeDistance = 50;
 
         function handleTouchStart(event) {
-            touchStartX = event.touches[0].clientX;
-            touchStartY = event.touches[0].clientY;
-            event.preventDefault();
-            slider.classList.remove('transition');
-            const sliderContainer = document.querySelector('.slider-container');
-            sliderContainer.classList.remove('transition');
-            pages.forEach(page => page.classList.remove('transition'));
+        const productItem = event.target.closest('.product-item.active');
+        // Если касание началось внутри активной карточки товара, разрешаем вертикальную прокрутку
+        if (productItem && productItem.scrollHeight > productItem.clientHeight) {
+            return;
         }
+        
+        touchStartX = event.touches[0].clientX;
+        touchStartY = event.touches[0].clientY;
+        event.preventDefault();
+        slider.classList.remove('transition');
+        const sliderContainer = document.querySelector('.slider-container');
+        sliderContainer.classList.remove('transition');
+        pages.forEach(page => page.classList.remove('transition'));
+    }
 
+            // Изменяем функцию handleTouchMove
         function handleTouchMove(event) {
+            const productItem = event.target.closest('.product-item.active');
+            // Если касание внутри активной карточки товара, разрешаем вертикальную прокрутку
+            if (productItem && productItem.scrollHeight > productItem.clientHeight) {
+             return;
+            }
+        
             touchEndX = event.touches[0].clientX;
             touchEndY = event.touches[0].clientY;
-        }
+        
+            // Блокируем вертикальную прокрутку страницы при горизонтальном свайпе
+            if (Math.abs(touchStartX - touchEndX) > Math.abs(touchStartY - touchEndY)) {
+            event.preventDefault();
+         }
+    }
 
         function handleTouchEnd() {
             const swipeDistanceX = touchStartX - touchEndX;
