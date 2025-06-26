@@ -645,13 +645,21 @@
                 gap: 15px;
             }
 
+            .product-item {
+                display: none;
+            }
+
+            .product-item.active {
+                display: flex;
+            }
+
             .product-image {
-                max-height: 150px;
+                max-height: 200px;
                 aspect-ratio: 4 / 3;
             }
 
             .product-image img {
-                max-height: 150px;
+                max-height: 200px;
                 width: auto;
                 object-fit: contain;
             }
@@ -741,6 +749,10 @@
                                 Ознайомтеся з нашим ексклюзивним каталогом сучасних та класичних світильників 
                                 для створення ідеальної атмосфери у вашому домі чи офісі.
                             </p>
+                            <p class="cover-link">
+                                Переглянути весь асортимент товару ви можете за посиланням: 
+                                <a href="https://www.brille.ua" target="_blank">brille.ua</a>
+                            </p>
                         </div>
                         <div class="page-number">Обкладинка</div>
                     </div>
@@ -754,13 +766,13 @@
                             <p class="page-subtitle">Розкіш та елегантність</p>
                         </div>
                         <div class="products-container">
-                            <div class="product-item">
+                            <div class="product-item" data-mobile-page="1">
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/oc_35636da64e5f423506bb3df2c35b1846ab3d0-1280x0.webp" alt="Люстра преміум-класу Модель 1" loading="lazy">
                                 </div>
                                 <h3 class="product-name">Люстра світлодіодна BR-01 693C/2</h3>
                                 <p class="product-description">
-                                    Сучасна модель в мінімалістичному стилі для освітлення великих та малих кімнат. 
+                                    Сучасна модель в мінімалістичному стилі для освітлення великих та малих кімнат.
                                 </p>
                                 <div class="product-specs">
                                     <div class="specs-title">Характеристики:</div>
@@ -772,7 +784,7 @@
                                 </div>
                                 <div class="product-price">7199 грн</div>
                             </div>
-                            <div class="product-item">
+                            <div class="product-item" data-mobile-page="2">
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/oc_15491e18769c3b936536e35e7830c2b4c32e9-1280x0.webp" alt="Люстра преміум-класу Модель 2" loading="lazy">
                                 </div>
@@ -804,26 +816,26 @@
                             <p class="page-subtitle">Мінімалізм та функціональність</p>
                         </div>
                         <div class="products-container">
-                            <div class="product-item">
+                            <div class="product-item" data-mobile-page="3">
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/oc_68361bdd72ea0a0f8f06735715f6e5fe22b2-1280x0.webp" alt="Світильник Модель 1" loading="lazy">
                                 </div>
                                 <h3 class="product-name">Люстра молекула підвісна BL-905S/10</h3>
                                 <p class="product-description">
-                                    одель виконана в формі намиста, де роль намистин грають закриті білі плафони зі скла. Доповненням служать дві масивні металеві прикраси, одна з яких висить на тросі.
+                                    Модель виконана в формі намиста, де роль намистин грають закриті білі плафони зі скла.
                                 </p>
                                 <div class="product-specs">
                                     <div class="specs-title">Характеристики:</div>
                                     <div class="specs-list">
                                         <div class="spec-item">Матеріал: Метал, Скло</div>
                                         <div class="spec-item">Розмір: 150x150 см</div>
-                                        <div class="spec-item">Лампи: LED </div>
+                                        <div class="spec-item">Лампи: LED</div>
                                         <div class="spec-item">Стиль: Сучасний</div>
                                     </div>
                                 </div>
                                 <div class="product-price">15199 грн</div>
                             </div>
-                            <div class="product-item">
+                            <div class="product-item" data-mobile-page="4">
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/oc_3150426d517fd8b3ed7153c37c86c038b9a51-1280x0.webp" alt="Люстра преміум-класу Модель 4" loading="lazy">
                                 </div>
@@ -836,7 +848,7 @@
                                     <div class="specs-list">
                                         <div class="spec-item">Матеріал: Пластик, метал</div>
                                         <div class="spec-item">Розмір: 130x105 см</div>
-                                        <div class="spec-item">Лампи: LED </div>
+                                        <div class="spec-item">Лампи: LED</div>
                                         <div class="spec-item">Стиль: Сучасний</div>
                                     </div>
                                 </div>
@@ -855,7 +867,7 @@
                             <p class="page-subtitle">Мінімалізм та функціональність</p>
                         </div>
                         <div class="products-container">
-                            <div class="product-item">
+                            <div class="product-item" data-mobile-page="5">
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/oc_68361bdd72ea0a0f8f06735715f6e5fe22b2-1280x0.webp" alt="Світильник Модель 1" loading="lazy">
                                 </div>
@@ -868,13 +880,13 @@
                                     <div class="specs-list">
                                         <div class="spec-item">Матеріал: Метал, Скло</div>
                                         <div class="spec-item">Розмір: 150x150 см</div>
-                                        <div class="spec-item">Лампи: LED </div>
+                                        <div class="spec-item">Лампи: LED</div>
                                         <div class="spec-item">Стиль: Сучасний</div>
                                     </div>
                                 </div>
                                 <div class="product-price">15199 грн</div>
                             </div>
-                            <div class="product-item">
+                            <div class="product-item" data-mobile-page="6">
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/oc_3150426d517fd8b3ed7153c37c86c038b9a51-1280x0.webp" alt="Люстра преміум-класу Модель 4" loading="lazy">
                                 </div>
@@ -887,7 +899,7 @@
                                     <div class="specs-list">
                                         <div class="spec-item">Матеріал: Пластик, метал</div>
                                         <div class="spec-item">Розмір: 130x105 см</div>
-                                        <div class="spec-item">Лампи: LED </div>
+                                        <div class="spec-item">Лампи: LED</div>
                                         <div class="spec-item">Стиль: Сучасний</div>
                                     </div>
                                 </div>
@@ -906,39 +918,39 @@
                             <p class="page-subtitle">Мінімалізм та функціональність</p>
                         </div>
                         <div class="products-container">
-                            <div class="product-item">
+                            <div class="product-item" data-mobile-page="7">
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/29-486-1-1280x0.webp" alt="Світильник Модель 1" loading="lazy">
                                 </div>
                                 <h3 class="product-name">Люстра BL-1003</h3>
                                 <p class="product-description">
-                                    втілення сучасного дизайну та високої якості. Виготовлена з міцних матеріалів, та прослужить вам довгі роки.
+                                    Втілення сучасного дизайну та високої якості. Виготовлена з міцних матеріалів, та прослужить вам довгі роки.
                                 </p>
                                 <div class="product-specs">
                                     <div class="specs-title">Характеристики:</div>
                                     <div class="specs-list">
                                         <div class="spec-item">Матеріал: Метал</div>
                                         <div class="spec-item">Розмір: 20x45 см</div>
-                                        <div class="spec-item">Лампи: LED </div>
+                                        <div class="spec-item">Лампи: LED</div>
                                         <div class="spec-item">Стиль: Сучасний</div>
                                     </div>
                                 </div>
                                 <div class="product-price">8500 грн</div>
                             </div>
-                            <div class="product-item">
+                            <div class="product-item" data-mobile-page="8">
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/oc_320921d75346a1259e533e121476761b33a0b-1280x0.webp" alt="Люстра преміум-класу Модель 4" loading="lazy">
                                 </div>
                                 <h3 class="product-name">Люстра світлодіодна підвісна з рослинами BL-992S/1</h3>
                                 <p class="product-description">
-                                    підвіс з оригінальним дизайном і відмінними технічними характеристиками. Вона складається з круглого корпуса, всередині якого розміщені світлодіоди та кошик зі штучними зеленими рослинами. Елементи підвішені на трьох тонких струнок.
+                                    Підвіс з оригінальним дизайном і відмінними технічними характеристиками.
                                 </p>
                                 <div class="product-specs">
                                     <div class="specs-title">Характеристики:</div>
                                     <div class="specs-list">
                                         <div class="spec-item">Матеріал: Скло, метал</div>
                                         <div class="spec-item">Розмір: 100x24 см</div>
-                                        <div class="spec-item">Лампи: LED </div>
+                                        <div class="spec-item">Лампи: LED</div>
                                         <div class="spec-item">Стиль: Флористика</div>
                                     </div>
                                 </div>
@@ -957,26 +969,26 @@
                             <p class="page-subtitle">Мінімалізм та функціональність</p>
                         </div>
                         <div class="products-container">
-                            <div class="product-item">
+                            <div class="product-item" data-mobile-page="9">
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/oc_315393c626f975ea5bb32630ae3fd7679cf46-1280x0.webp" alt="Світильник Модель 1" loading="lazy">
                                 </div>
                                 <h3 class="product-name">Люстра світлодіодна підвісна BR-01 671S/58</h3>
                                 <p class="product-description">
-                                    модний світильник зі стильним дизайном в золотистому кольорі. Модель підійде для спальні, вітальні або холу із сучасним інтер'єром. Конструкція складається з ажурного корпусу, що являє собою сферичне переплетення, на якому розташовано декілька десятків освітлювальних елементів.
+                                    Модний світильник зі стильним дизайном в золотистому кольорі.
                                 </p>
                                 <div class="product-specs">
                                     <div class="specs-title">Характеристики:</div>
                                     <div class="specs-list">
                                         <div class="spec-item">Матеріал: Метал, пластик</div>
                                         <div class="spec-item">Розмір: 90x80 см</div>
-                                        <div class="spec-item">Лампи: LED </div>
+                                        <div class="spec-item">Лампи: LED</div>
                                         <div class="spec-item">Стиль: Сучасний</div>
                                     </div>
                                 </div>
                                 <div class="product-price">27599 грн</div>
                             </div>
-                            <div class="product-item">
+                            <div class="product-item" data-mobile-page="10">
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/oc_3157088125a5b9aad30b558b98a9dec96ba90-1280x0.webp" alt="Люстра преміум-класу Модель 4" loading="lazy">
                                 </div>
@@ -989,7 +1001,7 @@
                                     <div class="specs-list">
                                         <div class="spec-item">Матеріал: Пластик, метал</div>
                                         <div class="spec-item">Розмір: 80x75 см</div>
-                                        <div class="spec-item">Лампи: LED </div>
+                                        <div class="spec-item">Лампи: LED</div>
                                         <div class="spec-item">Стиль: Сучасний</div>
                                     </div>
                                 </div>
@@ -1008,7 +1020,7 @@
                             <p class="page-subtitle">Мінімалізм та функціональність</p>
                         </div>
                         <div class="products-container">
-                            <div class="product-item">
+                            <div class="product-item" data-mobile-page="11">
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/oc_35634ce3fe91ba49a2278f4256ada63424749-1280x0.webp" alt="Світильник Модель 1" loading="lazy">
                                 </div>
@@ -1021,26 +1033,26 @@
                                     <div class="specs-list">
                                         <div class="spec-item">Матеріал: Метал</div>
                                         <div class="spec-item">Розмір: 68x51 см</div>
-                                        <div class="spec-item">Лампи: LED </div>
+                                        <div class="spec-item">Лампи: LED</div>
                                         <div class="spec-item">Стиль: Хай-тек</div>
                                     </div>
                                 </div>
                                 <div class="product-price">11199 грн</div>
                             </div>
-                            <div class="product-item">
+                            <div class="product-item" data-mobile-page="12">
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/oc_6840b84a06c5850531d01451bf54832d2000-1280x0.webp" alt="Люстра преміум-класу Модель 4" loading="lazy">
                                 </div>
                                 <h3 class="product-name">Світильник стельовий підвісний лофт світлодіодний BR-928S</h3>
                                 <p class="product-description">
-                                    Відноситься до світильників нового покоління. Вона виконана у формі круга, LED елементи розміщені по зовнішній стороні і закриті якісним прозорим склом з кришталевим декором.
+                                    Відноситься до світильників нового покоління. Вона виконана у формі круга.
                                 </p>
                                 <div class="product-specs">
                                     <div class="specs-title">Характеристики:</div>
                                     <div class="specs-list">
                                         <div class="spec-item">Матеріал: Метал</div>
                                         <div class="spec-item">Розмір: 170x80 см</div>
-                                        <div class="spec-item">Лампи: LED </div>
+                                        <div class="spec-item">Лампи: LED</div>
                                         <div class="spec-item">Стиль: Хай-тек</div>
                                     </div>
                                 </div>
@@ -1059,7 +1071,7 @@
                             <p class="page-subtitle">Мінімалізм та функціональність</p>
                         </div>
                         <div class="products-container">
-                            <div class="product-item">
+                            <div class="product-item" data-mobile-page="13">
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/oc_3156879c5832f6ad38a9792485dea3607d317-1280x0.webp" alt="Світильник Модель 1" loading="lazy">
                                 </div>
@@ -1072,17 +1084,17 @@
                                     <div class="specs-list">
                                         <div class="spec-item">Матеріал: Метал</div>
                                         <div class="spec-item">Розмір: 125x36 см</div>
-                                        <div class="spec-item">Лампи: LED </div>
+                                        <div class="spec-item">Лампи: LED</div>
                                         <div class="spec-item">Стиль: Сучасний</div>
                                     </div>
                                 </div>
                                 <div class="product-price">4800 грн</div>
                             </div>
-                            <div class="product-item">
+                            <div class="product-item" data-mobile-page="14">
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/oc_315646726dbb021540bf8abfd22ac5c9112f4-1280x0.webp" alt="Люстра преміум-класу Модель 4" loading="lazy">
                                 </div>
-                                <h3 class="product-name">Люстра підвіснаал BL-933S/1</h3>
+                                <h3 class="product-name">Люстра підвісна BL-933S/1</h3>
                                 <p class="product-description">
                                     Модний світильник золотистого кольору зі стильним дизайном.
                                 </p>
@@ -1091,7 +1103,7 @@
                                     <div class="specs-list">
                                         <div class="spec-item">Матеріал: Метал</div>
                                         <div class="spec-item">Розмір: 70x30 см</div>
-                                        <div class="spec-item">Лампи: LED </div>
+                                        <div class="spec-item">Лампи: LED</div>
                                         <div class="spec-item">Стиль: Сучасний</div>
                                     </div>
                                 </div>
@@ -1110,39 +1122,39 @@
                             <p class="page-subtitle">Мінімалізм та функціональність</p>
                         </div>
                         <div class="products-container">
-                            <div class="product-item">
+                            <div class="product-item" data-mobile-page="15">
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/27-220@3-1280x0.webp" alt="Світильник Модель 1" loading="lazy">
                                 </div>
                                 <h3 class="product-name">Світлодіодний підвіс з рослинами BL-984S</h3>
                                 <p class="product-description">
-                                    Конструкція складається безпосередньо з підвісу, на якому розташований світлодіодний світильник, під ним ємність кулястої форми для штучних або живих рослин з можливістю мотузкового поливу, таких як орхідея до прикладу.
+                                    Конструкція складається безпосередньо з підвісу, на якому розташований світлодіодний світильник.
                                 </p>
                                 <div class="product-specs">
                                     <div class="specs-title">Характеристики:</div>
                                     <div class="specs-list">
                                         <div class="spec-item">Матеріал: Метал</div>
                                         <div class="spec-item">Розмір: 243x15 см</div>
-                                        <div class="spec-item">Лампи: LED </div>
+                                        <div class="spec-item">Лампи: LED</div>
                                         <div class="spec-item">Стиль: Сучасний</div>
                                     </div>
                                 </div>
                                 <div class="product-price">3950 грн</div>
                             </div>
-                            <div class="product-item">
+                            <div class="product-item" data-mobile-page="16">
                                 <div class="product-image">
                                     <img src="https://www.brille.ua/image/cachewebp/catalog/29-487-1-1280x0.webp" alt="Люстра преміум-класу Модель 4" loading="lazy">
                                 </div>
                                 <h3 class="product-name">Люстра BL-1003</h3>
                                 <p class="product-description">
-                                    Втілення сучасного дизайну та високої якості. Виготовлена з міцних матеріалів, та прослужить вам довгі роки.
+                                    Втілення сучасного дизайну та високої якості. Виготовлена з міцних матеріалів.
                                 </p>
                                 <div class="product-specs">
                                     <div class="specs-title">Характеристики:</div>
                                     <div class="specs-list">
                                         <div class="spec-item">Матеріал: Метал</div>
                                         <div class="spec-item">Розмір: 20x61 см</div>
-                                        <div class="spec-item">Лампи: LED </div>
+                                        <div class="spec-item">Лампи: LED</div>
                                         <div class="spec-item">Стиль: Сучасний</div>
                                     </div>
                                 </div>
@@ -1153,132 +1165,15 @@
                     </div>
                 </div>
 
-                <!-- Сторінка 9: Товари 17 і 18 -->
+                <!-- Сторінка 9: Контакти -->
                 <div class="page" data-page="9">
                     <div class="page-content">
                         <div class="page-header">
-                            <h2 class="page-title">Сучасне освітлення</h2>
-                            <p class="page-subtitle">Мінімалізм та функціональність</p>
-                        </div>
-                        <div class="products-container">
-                            <div class="product-item">
-                                <div class="product-image">
-                                    <img src="https://www.brille.ua/image/cachewebp/catalog/oc_68361bdd72ea0a0f8f06735715f6e5fe22b2-1280x0.webp" alt="Світильник Модель 1" loading="lazy">
-                                </div>
-                                <h3 class="product-name">Модель Світильник 1</h3>
-                                <p class="product-description">
-                                    Казково гарний опис сучасного світильника з мінімалістичним дизайном.
-                                </p>
-                                <div class="product-specs">
-                                    <div class="specs-title">Характеристики:</div>
-                                    <div class="specs-list">
-                                        <div class="spec-item">Матеріал: Метал, Скло</div>
-                                        <div class="spec-item">Розмір: 150x150 см</div>
-                                        <div class="spec-item">Лампи: LED </div>
-                                        <div class="spec-item">Стиль: Сучасний</div>
-                                    </div>
-                                </div>
-                                <div class="product-price">15199 грн</div>
-                            </div>
-                            <div class="product-item">
-                                <div class="product-image">
-                                    <img src="https://www.brille.ua/image/cachewebp/catalog/oc_3150426d517fd8b3ed7153c37c86c038b9a51-1280x0.webp" alt="Люстра преміум-класу Модель 4" loading="lazy">
-                                </div>
-                                <h3 class="product-name">Люстра підвісна світлодіодна BR-01 661S/1</h3>
-                                <p class="product-description">
-                                    Модний світильник золотистого кольору зі стильним дизайном.
-                                </p>
-                                <div class="product-specs">
-                                    <div class="specs-title">Характеристики:</div>
-                                    <div class="specs-list">
-                                        <div class="spec-item">Матеріал: Пластик, метал</div>
-                                        <div class="spec-item">Розмір: 130x105 см</div>
-                                        <div class="spec-item">Лампи: LED </div>
-                                        <div class="spec-item">Стиль: Сучасний</div>
-                                    </div>
-                                </div>
-                                <div class="product-price">15199 грн</div>
-                            </div>
-                        </div>
-                        <div class="page-number">9</div>
-                    </div>
-                </div>
-
-                <!-- Сторінка 10: Товари 19 і 20 -->
-                <div class="page" data-page="10">
-                    <div class="page-content">
-                        <div class="page-header">
-                            <h2 class="page-title">Сучасне освітлення</h2>
-                            <p class="page-subtitle">Мінімалізм та функціональність</p>
-                        </div>
-                        <div class="products-container">
-                            <div class="product-item">
-                                <div class="product-image">
-                                    <img src="https://www.brille.ua/image/cachewebp/catalog/oc_68361bdd72ea0a0f8f06735715f6e5fe22b2-1280x0.webp" alt="Світильник Модель 1" loading="lazy">
-                                </div>
-                                <h3 class="product-name">Модель Світильник 1</h3>
-                                <p class="product-description">
-                                    Казково гарний опис сучасного світильника з мінімалістичним дизайном.
-                                </p>
-                                <div class="product-specs">
-                                    <div class="specs-title">Характеристики:</div>
-                                    <div class="specs-list">
-                                        <div class="spec-item">Матеріал: Метал, Скло</div>
-                                        <div class="spec-item">Розмір: 150x150 см</div>
-                                        <div class="spec-item">Лампи: LED </div>
-                                        <div class="spec-item">Стиль: Сучасний</div>
-                                    </div>
-                                </div>
-                                <div class="product-price">15199 грн</div>
-                            </div>
-                            <div class="product-item">
-                                <div class="product-image">
-                                    <img src="https://www.brille.ua/image/cachewebp/catalog/oc_3150426d517fd8b3ed7153c37c86c038b9a51-1280x0.webp" alt="Люстра преміум-класу Модель 4" loading="lazy">
-                                </div>
-                                <h3 class="product-name">Люстра підвісна світлодіодна BR-01 661S/1</h3>
-                                <p class="product-description">
-                                    Модний світильник золотистого кольору зі стильним дизайном.
-                                </p>
-                                <div class="product-specs">
-                                    <div class="specs-title">Характеристики:</div>
-                                    <div class="specs-list">
-                                        <div class="spec-item">Матеріал: Пластик, метал</div>
-                                        <div class="spec-item">Розмір: 130x105 см</div>
-                                        <div class="spec-item">Лампи: LED </div>
-                                        <div class="spec-item">Стиль: Сучасний</div>
-                                    </div>
-                                </div>
-                                <div class="product-price">15199 грн</div>
-                            </div>
-                        </div>
-                        <div class="page-number">10</div>
-                    </div>
-                </div>
-
-                <!-- Сторінка 11: Контакти -->
-                <div class="page" data-page="11">
-                    <div class="page-content">
-                        <div class="page-header">
-                            <h2 class="page-title">Контакти</h2>
-                            <p class="page-subtitle">Зв'яжіться з нами</p>
+                            <h2 class="page-title">Зв'яжіться з нами</h2>
+                            <p class="page-subtitle">Наші контакти</p>
                         </div>
                         <div class="contacts-container">
-                            <h2 class="contacts-title">Контактна інформація</h2>
-                            <div class="contact-item">
-                                <div class="contact-icon">📞</div>
-                                <div class="contact-info">
-                                    <div class="contact-label">Телефон</div>
-                                    <div class="contact-text">+38 (073) 102-86-24 - Володимир</div>
-                                    <div class="contact-text">+38 (050) 968-02-28 - Тетяна</div>
-                                </div>
-                            </div>
-                            <div class="contact-item">
-                                <div class="contact-icon">✉️</div>
-                                <div class="contact-info">
-                                    <div class="contact-label">Електронна пошта</div>
-                                    <div class="contact-text">info@brille.com</div>
-                                </div>
-                            </div>
+                            <h3 class="contacts-title">Контактна інформація</h3>
                             <div class="contact-item">
                                 <div class="contact-icon">📍</div>
                                 <div class="contact-info">
@@ -1287,120 +1182,148 @@
                                 </div>
                             </div>
                             <div class="contact-item">
-                                <div class="contact-icon">🕒</div>
+                                <div class="contact-icon">📞</div>
                                 <div class="contact-info">
-                                    <div class="contact-label">Час роботи</div>
-                                    <div class="contact-text">Пн-Пт: 9:00-21:00<br>Сб-Нд: 09:00-18:00</div>
+                                    <div class="contact-label">Ваші персональні менеджери:</div>
+                                    <div class="contact-text">+38 (073) 102-86-24 – Володимир</div>
+                                    <div class="contact-text">
+                                        <a href="viber://chat?number=+380731028624" class="contact-link">Viber</a> | 
+                                        <a href="https://web.telegram.org/k/#445632860" class="contact-link" target="_blank">Telegram</a>
+                                    </div>
+                                    <div class="contact-text">+38 (050) 968-02-28 – Тетяна</div>
+                                    <div class="contact-text">
+                                        <a href="viber://chat?number=+380509680228" class="contact-link">Viber</a> | 
+                                        <a href="https://web.telegram.org/k/#@tatannyaa" class="contact-link" target="_blank">Telegram</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">📧</div>
+                                <div class="contact-info">
+                                    <div class="contact-label">Електронна пошта</div>
+                                    <div class="contact-text">info@brille.com</div>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">🌐</div>
+                                <div class="contact-info">
+                                    <div class="contact-label">Вебсайт</div>
+                                    <a href="https://www.brille.ua" class="contact-text" target="_blank">www.brille.ua</a>
                                 </div>
                             </div>
                             <div class="thank-you">
-                                <h3>Дякуємо за увагу!</h3>
-                                <p>Ми допоможемо створити ідеальне освітлення для вашого проєкту.</p>
+                                <h3>Дякуємо за інтерес!</h3>
+                                <p>Ми завжди раді допомогти вам обрати ідеальне освітлення для вашого простору.</p>
                             </div>
                         </div>
-                        <div class="page-number">11</div>
+                        <div class="page-number">9</div>
                     </div>
                 </div>
             </div>
         </div>
 
-
-        <!-- Навігація знизу -->
+        <!-- Навігація -->
+        <button class="side-nav prev" id="prevPage" disabled>❮</button>
+        <button class="side-nav next" id="nextPage">❯</button>
         <div class="navigation">
-            <button class="nav-button prev" id="prevBtn" aria-label="Попередня сторінка"><span>←</span></button>
-            <div class="page-counter">
-                <span id="page-number">1</span> / <span id="total-pages">12</span>
-            </div>
-            <button class="nav-button next" id="nextBtn" aria-label="Наступна сторінка"><span>→</span></button>
+            <button class="nav-button" id="prev" disabled><span>❮</span></button>
+            <div class="page-counter" id="pageCounter">1 з 9</div>
+            <button class="nav-button" id="next"><span>❯</span></button>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            let currentPage = 0;
-            const totalPages = document.querySelectorAll('.page').length;
-            const slider = document.querySelector('#slider');
-            const pageElements = Array.from(document.querySelectorAll('.page'));
-            const prevBtn = document.querySelector('#prevBtn');
-            const nextBtn = document.querySelector('#nextBtn');
-            const sidePrevBtn = document.querySelector('#sidePrevBtn');
-            const sideNextBtn = document.querySelector('#sideNextBtn');
-            const currentPageNum = document.querySelector('#page-number');
-            const totalPagesElement = document.querySelector('#total-pages');
+        const slider = document.getElementById('slider');
+        const prevButton = document.getElementById('prev');
+        const nextButton = document.getElementById('next');
+        const prevPageButton = document.getElementById('prevPage');
+        const nextPageButton = document.getElementById('nextPage');
+        const pageCounter = document.getElementById('pageCounter');
+        const pages = document.querySelectorAll('.page');
+        const productItems = document.querySelectorAll('.product-item');
+        let currentPage = 0;
+        let currentMobilePage = 0;
+        const totalPages = pages.length;
+        const totalProducts = productItems.length;
+        const totalMobilePages = totalProducts + 2; // Cover + products + contacts
 
-            totalPagesElement.textContent = totalPages;
-
-            function updateSlider() {
-                const containerWidth = document.querySelector('.slider-container').offsetWidth;
-
-                if (currentPage < 0) currentPage = 0;
-                if (currentPage >= totalPages) currentPage = totalPages - 1;
-
-                slider.style.transform = `translateX(${-currentPage * containerWidth}px)`;
-
-                prevBtn.disabled = currentPage === 0;
-                nextBtn.disabled = currentPage === totalPages - 1;
-                if (sidePrevBtn) sidePrevBtn.disabled = currentPage === 0;
-                if (sideNextBtn) sideNextBtn.disabled = currentPage === totalPages - 1;
-                currentPageNum.textContent = currentPage + 1;
-
-                console.log(`Current Page: ${currentPage}, Transform: ${slider.style.transform}, Total Pages: ${totalPages}`);
+        function updateSlider() {
+            const isMobile = window.innerWidth <= 768;
+            if (isMobile) {
+                // Mobile: Navigate by product (virtual pages)
+                if (currentMobilePage === 0) {
+                    // Cover page
+                    slider.style.transform = `translateX(0)`;
+                    productItems.forEach(item => item.classList.remove('active'));
+                } else if (currentMobilePage >= 1 && currentMobilePage <= totalProducts) {
+                    // Product pages
+                    const productIndex = currentMobilePage - 1;
+                    const product = productItems[productIndex];
+                    const pageIndex = product.parentElement.parentElement.parentElement.getAttribute('data-page');
+                    slider.style.transform = `translateX(-${pageIndex * 100}%)`;
+                    productItems.forEach(item => item.classList.remove('active'));
+                    product.classList.add('active');
+                } else {
+                    // Contacts page
+                    slider.style.transform = `translateX(-${(totalPages - 1) * 100}%)`;
+                    productItems.forEach(item => item.classList.remove('active'));
+                }
+                pageCounter.textContent = `${currentMobilePage + 1} з ${totalMobilePages}`;
+                prevButton.disabled = currentMobilePage === 0;
+                nextButton.disabled = currentMobilePage === totalMobilePages - 1;
+                prevPageButton.disabled = currentMobilePage === 0;
+                nextPageButton.disabled = currentMobilePage === totalMobilePages - 1;
+            } else {
+                // Desktop: Navigate by page
+                slider.style.transform = `translateX(-${currentPage * 100}%)`;
+                productItems.forEach(item => item.classList.add('active')); // Show all products on page
+                pageCounter.textContent = `${currentPage + 1} з ${totalPages}`;
+                prevButton.disabled = currentPage === 0;
+                nextButton.disabled = currentPage === totalPages - 1;
+                prevPageButton.disabled = currentPage === 0;
+                nextPageButton.disabled = currentPage === totalPages - 1;
             }
+        }
 
-            function nextPage() {
+        function goToNext() {
+            const isMobile = window.innerWidth <= 768;
+            if (isMobile) {
+                if (currentMobilePage < totalMobilePages - 1) {
+                    currentMobilePage++;
+                    updateSlider();
+                }
+            } else {
                 if (currentPage < totalPages - 1) {
-                    currentPage += 1;
+                    currentPage++;
+                    currentMobilePage = currentPage === 0 ? 0 : currentPage * 2 - 1;
                     updateSlider();
                 }
             }
+        }
 
-            function prevPage() {
+        function goToPrev() {
+            const isMobile = window.innerWidth <= 768;
+            if (isMobile) {
+                if (currentMobilePage > 0) {
+                    currentMobilePage--;
+                    updateSlider();
+                }
+            } else {
                 if (currentPage > 0) {
-                    currentPage -= 1;
+                    currentPage--;
+                    currentMobilePage = currentPage === 0 ? 0 : currentPage * 2 - 1;
                     updateSlider();
                 }
             }
+        }
 
-            nextBtn.addEventListener('click', nextPage);
-            prevBtn.addEventListener('click', prevPage);
-            if (sideNextBtn) sideNextBtn.addEventListener('click', nextPage);
-            if (sidePrevBtn) sidePrevBtn.addEventListener('click', prevPage);
+        prevButton.addEventListener('click', goToPrev);
+        nextButton.addEventListener('click', goToNext);
+        prevPageButton.addEventListener('click', goToPrev);
+        nextPageButton.addEventListener('click', goToNext);
 
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowLeft') {
-                    prevPage();
-                } else if (e.key === 'ArrowRight') {
-                    nextPage();
-                }
-            });
-
-            let startX = 0;
-            let startY = 0;
-
-            document.addEventListener('touchstart', (e) => {
-                startX = e.touches[0].clientX;
-                startY = e.touches[0].clientY;
-            });
-
-            document.addEventListener('touchend', (e) => {
-                const endX = e.changedTouches[0].clientX;
-                const endY = e.changedTouches[0].clientY;
-                const diffX = startX - endX;
-                const diffY = startY - endY;
-
-                if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
-                    if (diffX > 0 && currentPage < totalPages - 1) {
-                        nextPage();
-                    } else if (diffX < 0 && currentPage > 0) {
-                        prevPage();
-                    }
-                }
-            });
-
-            window.addEventListener('resize', updateSlider);
-
-            updateSlider();
-        });
+        window.addEventListener('resize', updateSlider);
+        updateSlider(); // Initial call
     </script>
 </body>
 </html>
