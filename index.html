@@ -1456,18 +1456,39 @@
         // Function to handle app links with fallback
         function handleAppLink(event, fallbackUrl) {
             event.preventDefault();
-            const appLink = event.target.href;
-            const timeout = setTimeout(() => {
-                window.location.href = fallbackUrl; // Fallback to web version if app doesn't open
-            }, 1000); // Wait 1 second for app to open
+            const appLink = event.currentTarget.href; // Используем currentTarget вместо target
 
-            window.location.href = appLink; // Try to open the app
+    // Проверяем, является ли ссылка кастомным протоколом
+            const isAppLink = appLink.startsWith('viber://') || appLink.startsWith('tg://');
 
-            // Listen for the app opening (if it fails, the timeout will trigger the fallback)
-            window.addEventListener('blur', () => {
-                clearTimeout(timeout);
-            }, { once: true });
+        if (!isAppLink) {
+            window.location.href = fallbackUrl; // Если ссылка некорректна, переходим на fallback
+            return;
         }
+
+    // Пытаемся открыть приложение
+        window.location.href = appLink;
+
+    // Устанавливаем таймер для проверки, открылось ли приложение
+        const timeout = setTimeout(() => {
+        // Проверяем, находится ли страница в фокусе
+            if (document.hasFocus()) {
+                window.location.href = fallbackUrl; // Если страница в фокусе, приложение не открылось
+            }
+        }, 1500); // Увеличиваем таймер до 1.5 секунд для надежности
+
+    // Отменяем таймер, если страница теряет фокус (приложение открылось)
+        window.addEventListener('blur', () => {
+            clearTimeout(timeout);
+        }, { once: true });
+
+    // Дополнительно: проверяем видимость документа (для iOS)
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                clearTimeout(timeout); // Если документ стал скрытым, приложение открылось
+            }
+        }, { once: true });
+    }
     </script>
 </body>
 </html>
